@@ -3,35 +3,10 @@
 <head>
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
- <title>Vie Scolaire & Permanence</title>
+ <title>Vie Scolaire</title>
  <link rel="apple-touch-icon" href="./Logo.PNG">
- 
  <!-- Tailwind CSS -->
  <script src="https://cdn.tailwindcss.com"></script>
- <script>
- tailwind.config = {
- theme: {
- extend: {
- fontFamily: {
- sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
- },
- colors: {
- brand: {
- 50: '#f0fdf4',
- 100: '#dcfce7',
- 200: '#bbf7d0',
- 500: '#22c55e',
- 600: '#16a34a',
- 700: '#15803d',
- 800: '#166534',
- 900: '#14532d',
- }
- }
- }
- }
- }
- </script>
- 
  <!-- Lucide Icons -->
  <script src="https://unpkg.com/lucide@latest"></script>
  <!-- SheetJS (XLSX & CSV) -->
@@ -42,14 +17,14 @@
  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
  <!-- Html5-QRCode (Scanner) -->
  <script src="https://unpkg.com/html5-qrcode"></script>
- <!-- Chart.js -->
+ <!-- Chart.js pour la génération des graphiques -->
  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
  <!-- jsPDF, html2canvas & jsPDF-AutoTable -->
  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
  <!-- Google Fonts Inter -->
- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+ <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
  
 <style>
  * {
@@ -58,86 +33,44 @@
  -webkit-tap-highlight-color: transparent;
  }
  
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: #f1f5f9; }
-::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
-::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-
-.autocomplete-selected {
- background-color: #f0fdf4 !important;
- border-left: 4px solid #16a34a !important;
-}
-
-@media print {
- @page {
- size: A4 portrait;
- margin: 12mm;
+.no-scrollbar::-webkit-scrollbar {
+ display: none;
  }
+ .no-scrollbar {
+ -ms-overflow-style: none;
+ scrollbar-width: none;
+ }
+
+ @media print {
  .no-print { display: none !important; }
  .print-only { display: block !important; }
- body { background: white !important; color: black !important; font-size: 10pt !important; }
+ body { background: white !important; color: black !important; }
  .shadow-lg, .shadow-md, .shadow-sm { box-shadow: none !important; }
  .border { border-color: #cbd5e1 !important; }
-
- .print-table {
- width: 100% !important;
- border-collapse: collapse !important;
- margin-top: 15px !important;
  }
- .print-table th, .print-table td {
- border: 1px solid #334155 !important;
- padding: 8px 10px !important;
- text-align: left !important;
- font-size: 9.5pt !important;
- }
- .print-table th {
- background-color: #f1f5f9 !important;
- font-weight: 800 !important;
- color: #0f172a !important;
- text-transform: uppercase;
- }
- .print-badge {
- padding: 3px 8px;
- border-radius: 4px;
- font-weight: 800;
- font-size: 8pt;
- display: inline-block;
- text-transform: uppercase;
- }
- .print-badge-perm { background-color: #dcfce7; color: #166534; border: 1px solid #86efac; }
- .print-badge-excl { background-color: #ffe4e6; color: #9f1239; border: 1px solid #fca5a5; }
- .print-badge-autre { background-color: #fef3c7; color: #92400e; border: 1px solid #fde047; }
-}
-
-.print-only { display: none; }
-
+ 
 .page-fade {
  animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-@keyframes fadeIn {
+ }
+ @keyframes fadeIn {
  from { opacity: 0; transform: translateY(6px); }
  to { opacity: 1; transform: translateY(0); }
-}
-
+ }
+ 
 .card-no-exit {
  background-color: rgba(254, 242, 242, 0.9) !important;
  border-color: #fca5a5 !important;
-}
-.card-no-exit:hover {
+ }
+ .card-no-exit:hover {
  background-color: rgba(254, 226, 226, 1) !important;
-}
+ }
 
-.pb-safe {
+ .pb-safe {
  padding-bottom: env(safe-area-inset-bottom, 1rem);
-}
-</style>
+ }
+ </style>
 </head>
 <body class="h-full text-slate-800 antialiased flex flex-col min-h-screen pb-20 md:pb-0">
-
- <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none no-print"></div>
 
  <!-- EN-TÊTE PRINCIPAL -->
  <header class="bg-indigo-900 text-white shadow-md sticky top-0 z-30 no-print border-b border-indigo-800/50">
@@ -196,13 +129,6 @@
  <i data-lucide="list-checks" class="w-4 h-4 text-amber-400"></i>
  <span>Récapitulatif</span>
  </button>
- 
- <!-- BOUTON PERMANENCE -->
- <button onclick="showPermanencePage()" class="inline-flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-3 py-2 rounded-xl transition border border-emerald-400/40 shadow-xs">
- <i data-lucide="shield-check" class="w-4 h-4 text-emerald-200"></i>
- <span>Permanence</span>
- </button>
-
  <button onclick="exportCpeAlertPDF()" class="inline-flex items-center gap-1.5 bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold px-3 py-2 rounded-xl transition shadow-xs">
  <i data-lucide="siren" class="w-4 h-4"></i>
  <span>PDF Alerte CPE</span>
@@ -228,9 +154,6 @@
  </div>
 
  <div class="flex md:hidden items-center gap-2">
- <button onclick="showPermanencePage()" class="p-2 bg-emerald-600 active:bg-emerald-700 text-white rounded-xl shadow-xs" title="Permanence">
- <i data-lucide="shield-check" class="w-5 h-5"></i>
- </button>
  <button onclick="openSettingsModal()" class="p-2 bg-indigo-800 active:bg-indigo-700 text-white rounded-xl shadow-xs" title="Réglages Alerte CPE">
  <i data-lucide="settings" class="w-5 h-5"></i>
  </button>
@@ -257,13 +180,13 @@
  <i data-lucide="list-checks" class="w-5 h-5 text-amber-500"></i>
  <span class="text-[10px] font-semibold">Récap</span>
  </button>
- <button onclick="showPermanencePage()" class="flex flex-col items-center gap-1 text-slate-600 active:text-emerald-600">
- <i data-lucide="shield-check" class="w-5 h-5 text-emerald-600"></i>
- <span class="text-[10px] font-bold">Permanence</span>
- </button>
  <button onclick="exportUnjustifiedAbsencesPDF()" class="flex flex-col items-center gap-1 text-slate-600 active:text-red-700">
  <i data-lucide="user-x" class="w-5 h-5 text-red-700"></i>
  <span class="text-[10px] font-semibold">Abs. Injust.</span>
+ </button>
+ <button onclick="exportCpeAlertPDF()" class="flex flex-col items-center gap-1 text-slate-600 active:text-rose-600">
+ <i data-lucide="siren" class="w-5 h-5 text-rose-600"></i>
+ <span class="text-[10px] font-semibold">PDF CPE</span>
  </button>
  <button onclick="openSettingsModal()" class="flex flex-col items-center gap-1 text-slate-600 active:text-indigo-600">
  <i data-lucide="settings" class="w-5 h-5 text-indigo-600"></i>
@@ -689,265 +612,18 @@
  </div>
  </section>
 
- <!-- PAGE 4 : PERMANENCE -->
- <section id="pagePermanence" class="hidden page-fade space-y-6 no-print">
- <header class="bg-slate-900 text-white rounded-3xl p-4 sm:p-6 shadow-xl border border-slate-800 flex flex-wrap items-center justify-between gap-4">
- <div class="flex items-center space-x-3">
- <div class="bg-brand-500 text-slate-950 p-2.5 rounded-2xl shadow-lg font-bold">
- <i data-lucide="clipboard-check" class="w-6 h-6"></i>
- </div>
- <div>
- <div class="flex items-center gap-2 flex-wrap">
- <h2 class="text-xl font-black tracking-tight text-white">PERMANENCE</h2>
- <span id="device-mode-badge" class="text-[11px] font-extrabold px-2.5 py-0.5 rounded-full bg-slate-800 text-brand-500 border border-brand-500/30 flex items-center gap-1 shadow-inner">
- <i data-lucide="monitor" class="w-3.5 h-3.5"></i>
- <span>Mode PC</span>
- </span>
- </div>
- <p class="text-xs text-slate-400 font-medium">Saisie d'appel réactive & impression PDF</p>
- </div>
- </div>
-
- <div class="flex items-center gap-2 bg-slate-800/90 p-1.5 rounded-2xl border border-slate-700/80 w-full sm:w-auto justify-between sm:justify-start flex-wrap">
- <div class="flex items-center gap-2 px-2 text-slate-300">
- <i data-lucide="user-check" class="w-4 h-4 text-brand-500"></i>
- <span class="text-xs font-bold uppercase tracking-wider">AED :</span>
- </div>
- 
- <select id="aed-select" class="bg-slate-900 text-white font-bold text-sm rounded-xl px-3 py-2 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500 cursor-pointer flex-1 sm:flex-initial"></select>
-
- <button onclick="deleteCurrentAed()" class="bg-rose-900/40 hover:bg-rose-700 text-rose-300 hover:text-white px-2.5 py-2 rounded-xl text-xs font-bold flex items-center transition border border-rose-700/50" title="Supprimer cet AED">
- <i data-lucide="trash-2" class="w-4 h-4"></i>
- </button>
-
- <button onclick="openModal('modal-aed')" class="bg-slate-700 hover:bg-slate-600 text-white px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition shadow-sm" title="Ajouter un nouvel AED">
- <i data-lucide="user-plus" class="w-4 h-4 text-brand-500"></i>
- <span>+ AED</span>
- </button>
-
- <button onclick="openHistoryModal()" class="bg-brand-600 hover:bg-brand-500 text-white px-3 py-2 rounded-xl text-xs font-extrabold flex items-center gap-1.5 transition shadow-md ml-auto sm:ml-2">
- <i data-lucide="history" class="w-4 h-4"></i>
- <span>Historique</span>
- </button>
- </div>
- </header>
-
- <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-start">
- 
- <div class="lg:col-span-5 space-y-5 sm:space-y-6">
- <div class="bg-white p-4 sm:p-6 rounded-3xl shadow-sm border border-slate-200/90 space-y-3 relative">
- <label for="search-input" class="block text-xs font-extrabold text-slate-500 uppercase tracking-wider flex items-center justify-between">
- <span class="flex items-center gap-1.5 text-slate-700">
- <i data-lucide="search" class="w-4 h-4 text-brand-600"></i>
- Appel Élève (Prénom / Nom)
- </span>
- <span class="hidden sm:inline-block text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-md font-mono border border-slate-200">
- Raccourci: Ctrl + K
- </span>
- </label>
-
- <div class="relative w-full">
- <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-brand-600">
- <i data-lucide="user-search" class="w-5 h-5"></i>
- </div>
-
- <input type="text" id="search-input" 
- placeholder="Tapez le prénom ou le nom..." 
- autocomplete="off"
- oninput="handleSearchInput()"
- onkeydown="handleSearchKeyDown(event)"
- onfocus="handleSearchInput()"
- class="w-full pl-11 pr-11 py-3.5 sm:py-4 bg-slate-50 border-2 border-slate-200 rounded-2xl text-base sm:text-lg font-semibold text-slate-900 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:bg-white focus:ring-4 focus:ring-brand-500/10 transition shadow-inner">
-
- <button id="clear-search-btn" onclick="clearSearchInput()" class="hidden absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-slate-600">
- <i data-lucide="x-circle" class="w-5 h-5"></i>
- </button>
-
- <div id="autocomplete-dropdown" class="hidden absolute left-0 right-0 top-full mt-2 bg-white border border-slate-200 rounded-2xl shadow-2xl z-50 max-h-80 overflow-y-auto divide-y divide-slate-100 transition-all"></div>
- </div>
-
- <p class="text-xs text-slate-400 flex items-center gap-1 pt-1">
- <i data-lucide="corner-down-left" class="w-3.5 h-3.5 text-brand-600 shrink-0"></i>
- <span>Cliquez ou tapez <kbd class="px-1.5 py-0.5 bg-slate-100 border border-slate-300 rounded text-[10px] font-mono">Entrée</kbd> pour ajouter à l'appel.</span>
- </p>
- </div>
-
- <div class="bg-white p-4 sm:p-5 rounded-3xl shadow-sm border border-slate-200/90 space-y-3">
- <div class="flex items-center justify-between">
- <h3 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider">Actions & Importation</h3>
- <span id="db-count-badge" class="text-[11px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200">
- Base : 0 élève(s)
- </span>
- </div>
- 
- <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
- <label class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 cursor-pointer transition shadow-sm hover:shadow-indigo-200 active:scale-95">
- <i data-lucide="file-spreadsheet" class="w-4 h-4"></i>
- <span>Importer Excel / CSV</span>
- <input type="file" id="excel-file-input" accept=".xlsx, .xls, .csv" class="hidden" onchange="handleFileUpload(event)">
- </label>
-
- <button onclick="openModal('modal-student')" class="bg-slate-900 hover:bg-slate-800 text-white px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition shadow-sm active:scale-95">
- <i data-lucide="user-plus" class="w-4 h-4 text-brand-500"></i>
- <span>+ Élève (Hors-liste)</span>
- </button>
- </div>
-
- <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
- <button onclick="loadDemoData()" class="w-full bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200/90 px-3 py-2.5 rounded-2xl text-xs font-bold flex items-center justify-center gap-2 transition">
- <i data-lucide="sparkles" class="w-4 h-4 text-amber-600"></i>
- <span>Charger démo</span>
- </button>
-
- <button onclick="clearStudentDatabase()" class="w-full bg-rose-50 hover:bg-rose-100 text-rose-800 border border-rose-200/90 px-3 py-2.5 rounded-2xl text-xs font-bold flex items-center justify-center gap-2 transition" title="Effacer tous les élèves importés dans la base de données">
- <i data-lucide="trash-2" class="w-4 h-4 text-rose-600"></i>
- <span>Effacer base élèves</span>
- </button>
- </div>
- </div>
-
- <div class="grid grid-cols-2 gap-3">
- <div class="bg-white p-3.5 sm:p-4 rounded-2xl shadow-sm border border-slate-200/90 flex items-center justify-between">
- <div>
- <p class="text-[10px] sm:text-[11px] font-extrabold text-slate-400 uppercase tracking-wider">Présents</p>
- <p id="stat-total" class="text-xl sm:text-2xl font-black text-slate-900 mt-0.5">0</p>
- </div>
- <div class="p-2 sm:p-2.5 bg-slate-100 text-slate-700 rounded-xl">
- <i data-lucide="users" class="w-4 h-4 sm:w-5 sm:h-5"></i>
- </div>
- </div>
-
- <div class="bg-white p-3.5 sm:p-4 rounded-2xl shadow-sm border border-slate-200/90 flex items-center justify-between">
- <div>
- <p class="text-[10px] sm:text-[11px] font-extrabold text-emerald-600 uppercase tracking-wider">Permanence</p>
- <p id="stat-perm" class="text-xl sm:text-2xl font-black text-emerald-600 mt-0.5">0</p>
- </div>
- <div class="p-2 sm:p-2.5 bg-emerald-50 text-emerald-600 rounded-xl">
- <i data-lucide="shield-check" class="w-4 h-4 sm:w-5 sm:h-5"></i>
- </div>
- </div>
-
- <div class="bg-white p-3.5 sm:p-4 rounded-2xl shadow-sm border border-slate-200/90 flex items-center justify-between">
- <div>
- <p class="text-[10px] sm:text-[11px] font-extrabold text-rose-600 uppercase tracking-wider">Exclusions</p>
- <p id="stat-excl" class="text-xl sm:text-2xl font-black text-rose-600 mt-0.5">0</p>
- </div>
- <div class="p-2 sm:p-2.5 bg-rose-50 text-rose-600 rounded-xl">
- <i data-lucide="alert-triangle" class="w-4 h-4 sm:w-5 sm:h-5"></i>
- </div>
- </div>
-
- <div class="bg-white p-3.5 sm:p-4 rounded-2xl shadow-sm border border-slate-200/90 flex items-center justify-between">
- <div>
- <p class="text-[10px] sm:text-[11px] font-extrabold text-amber-600 uppercase tracking-wider">Autres</p>
- <p id="stat-autre" class="text-xl sm:text-2xl font-black text-amber-600 mt-0.5">0</p>
- </div>
- <div class="p-2 sm:p-2.5 bg-amber-50 text-amber-600 rounded-xl">
- <i data-lucide="clock" class="w-4 h-4 sm:w-5 sm:h-5"></i>
- </div>
- </div>
- </div>
-
- </div>
-
- <div class="lg:col-span-7 space-y-4">
- <div class="bg-white p-4 rounded-3xl shadow-sm border border-slate-200/90 flex flex-wrap items-center justify-between gap-3">
- <div class="flex items-center gap-2">
- <div class="bg-brand-50 p-2 rounded-xl text-brand-600">
- <i data-lucide="list-checks" class="w-5 h-5"></i>
- </div>
- <div>
- <h3 class="text-base font-extrabold text-slate-900">Feuille d'Appel en cours</h3>
- <p id="session-count-badge" class="text-xs font-semibold text-slate-400">0 élève(s) enregistré(s)</p>
- </div>
- </div>
-
- <div class="flex items-center gap-2 w-full sm:w-auto justify-end flex-wrap">
- <button onclick="resetCurrentSession()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-1.5 transition" title="Vider et sauvegarder la liste d'appel actuelle">
- <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
- <span class="hidden sm:inline">Vider (avec sauvegarde)</span>
- </button>
-
- <button onclick="triggerPrint()" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold flex items-center gap-1.5 transition shadow-md active:scale-95">
- <i data-lucide="printer" class="w-4 h-4 sm:w-5 sm:h-5"></i>
- <span>Imprimer A4</span>
- </button>
- </div>
- </div>
-
- <div id="session-list-container" class="space-y-2.5"></div>
-
- <div id="empty-session-state" class="bg-white rounded-3xl p-8 sm:p-12 text-center border-2 border-dashed border-slate-200 space-y-3">
- <div class="mx-auto w-14 h-14 bg-brand-50 text-brand-600 rounded-2xl flex items-center justify-center">
- <i data-lucide="user-check" class="w-7 h-7"></i>
- </div>
- <h3 class="text-base font-bold text-slate-800">Aucun élève à l'appel pour le moment</h3>
- <p class="text-xs text-slate-500 max-w-sm mx-auto">Recherchez le prénom ou nom d'un élève à gauche pour l'ajouter instantanément.</p>
- </div>
- </div>
-
- </div>
- </section>
-
  <footer class="mt-8 text-center text-[11px] text-slate-400 no-print pb-4">
  VieScolaire Pro &bull; Seuils Avancés & Infobulle Alerte CPE
  </footer>
 
  </main>
 
- <!-- CANVAS HORS-ÉCRAN POUR GRAPHIQUE PDF -->
+ <!-- CANVAS HORS-ÉCRAN POUR GÉNÉRATION DU GRAPHIQUE PDF -->
  <div style="position: absolute; left: -9999px; top: -9999px;">
     <canvas id="pdfChartCanvas" width="800" height="400"></canvas>
  </div>
 
- <!-- ZONE IMPRESSION PERMANENCE (A4 PORTRAIT) -->
- <div id="print-zone" class="print-only print-container p-2">
- <div class="border-b-2 border-slate-900 pb-3 mb-4">
- <div class="flex justify-between items-start mb-2">
- <div>
- <h1 id="print-title-header" class="text-xl font-black text-slate-900 tracking-tight uppercase"></h1>
- <p class="text-xs text-slate-600 mt-1 font-semibold">Vie Scolaire — Registre officiel d'appel de la permanence</p>
- </div>
- <div class="text-right text-xs text-slate-700">
- <p class="text-lg font-black text-slate-900 uppercase tracking-wide border-b-2 border-slate-900 pb-1 mb-1" id="print-date"></p>
- <p><strong>Heure édition :</strong> <span id="print-full-time"></span></p>
- </div>
- </div>
-
- <div class="flex gap-6 mt-2 pt-2 border-t border-slate-200 text-xs font-medium">
- <div>Effectif présent : <strong id="print-stat-total" class="text-slate-900">0</strong></div>
- <div>Permanence normale : <strong id="print-stat-perm" class="text-emerald-800">0</strong></div>
- <div>Exclusions : <strong id="print-stat-excl" class="text-rose-800">0</strong></div>
- <div>Autres : <strong id="print-stat-autre" class="text-amber-800">0</strong></div>
- </div>
- </div>
-
- <table class="print-table">
- <thead>
- <tr>
- <th style="width: 6%;">N°</th>
- <th style="width: 50%;">NOM PRÉNOM</th>
- <th style="width: 14%;">CLASSE</th>
- <th style="width: 20%;">MOTIF / STATUT</th>
- <th style="width: 10%; text-align: center;">PRÉSENCE</th>
- </tr>
- </thead>
- <tbody id="print-table-body"></tbody>
- </table>
-
- <div class="mt-12 pt-4 border-t border-slate-300 grid grid-cols-2 gap-8 text-xs">
- <div>
- <p class="font-bold text-slate-800 mb-10">Signature de l'AED responsable :</p>
- <p id="print-signature-aed" class="text-slate-600 border-b border-dashed border-slate-400 pb-1 font-semibold"></p>
- </div>
- <div>
- <p class="font-bold text-slate-800 mb-10">Visa du CPE / Direction :</p>
- <div class="border-b border-dashed border-slate-400 pb-1"></div>
- </div>
- </div>
- </div>
-
- <!-- MODALES VIE SCOLAIRE -->
+ <!-- MODALE : RÉGLAGES ALERTE CPE AUTOMATIQUE -->
  <div id="settingsModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs hidden z-50 flex items-center justify-center p-4">
  <div class="bg-white rounded-2xl shadow-xl max-w-lg w-full p-5 sm:p-6 space-y-4 border border-slate-100 max-h-[90vh] overflow-y-auto">
  <div class="flex justify-between items-center border-b pb-3 border-slate-100 sticky top-0 bg-white z-10">
@@ -963,11 +639,14 @@
  <form id="settingsForm" onsubmit="handleSaveSettings(event)" class="space-y-4">
  <p class="text-xs text-slate-600 font-medium leading-relaxed">
  Configurez le nombre seuil pour chaque élément de la <b>Synthèse & Compteurs</b> pouvant activer automatiquement le bouton <b>Alerte CPE</b>.
+ L'alerte se déclenchera si au moins un des seuils configurés est atteint ou dépassé (mettez 0 pour désactiver un seuil).
  </p>
 
  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-slate-50 p-3.5 rounded-xl border border-slate-200">
  <div>
-   <label class="block text-[11px] font-bold text-slate-700 mb-1">Absences injustifiées</label>
+   <label class="block text-[11px] font-bold text-slate-700 mb-1">
+     Absences injustifiées
+   </label>
    <div class="relative">
      <input type="number" id="settingCpeThresholdAbsInjustifiees" min="0" max="100" class="w-full p-2 bg-white border border-slate-200 rounded-lg text-xs font-semibold text-slate-800 outline-none focus:ring-2 focus:ring-indigo-500">
      <span class="absolute right-2.5 top-2 text-[10px] text-slate-400">abs. inj.</span>
@@ -975,7 +654,9 @@
  </div>
 
  <div>
-   <label class="block text-[11px] font-bold text-slate-700 mb-1">Retards</label>
+   <label class="block text-[11px] font-bold text-slate-700 mb-1">
+     Retards
+   </label>
    <div class="relative">
      <input type="number" id="settingCpeThresholdRetards" min="0" max="100" class="w-full p-2 bg-white border border-slate-200 rounded-lg text-xs font-semibold text-slate-800 outline-none focus:ring-2 focus:ring-indigo-500">
      <span class="absolute right-2.5 top-2 text-[10px] text-slate-400">retard(s)</span>
@@ -983,7 +664,9 @@
  </div>
 
  <div>
-   <label class="block text-[11px] font-bold text-slate-700 mb-1">Absences totales</label>
+   <label class="block text-[11px] font-bold text-slate-700 mb-1">
+     Absences totales
+   </label>
    <div class="relative">
      <input type="number" id="settingCpeThresholdAbsences" min="0" max="100" class="w-full p-2 bg-white border border-slate-200 rounded-lg text-xs font-semibold text-slate-800 outline-none focus:ring-2 focus:ring-indigo-500">
      <span class="absolute right-2.5 top-2 text-[10px] text-slate-400">absence(s)</span>
@@ -991,7 +674,9 @@
  </div>
 
  <div>
-   <label class="block text-[11px] font-bold text-slate-700 mb-1">Heures de retenue / colles</label>
+   <label class="block text-[11px] font-bold text-slate-700 mb-1">
+     Heures de retenue / colles
+   </label>
    <div class="relative">
      <input type="number" id="settingCpeThresholdRetenues" step="0.5" min="0" max="100" class="w-full p-2 bg-white border border-slate-200 rounded-lg text-xs font-semibold text-slate-800 outline-none focus:ring-2 focus:ring-indigo-500">
      <span class="absolute right-2.5 top-2 text-[10px] text-slate-400">heure(s)</span>
@@ -999,7 +684,9 @@
  </div>
 
  <div>
-   <label class="block text-[11px] font-bold text-slate-700 mb-1">Emploi du temps bloqué</label>
+   <label class="block text-[11px] font-bold text-slate-700 mb-1">
+     Emploi du temps bloqué
+   </label>
    <div class="relative">
      <input type="number" id="settingCpeThresholdEmploiBloque" min="0" max="100" class="w-full p-2 bg-white border border-slate-200 rounded-lg text-xs font-semibold text-slate-800 outline-none focus:ring-2 focus:ring-indigo-500">
      <span class="absolute right-2.5 top-2 text-[10px] text-slate-400">fois</span>
@@ -1007,7 +694,9 @@
  </div>
 
  <div>
-   <label class="block text-[11px] font-bold text-slate-700 mb-1">Exclusions de cours</label>
+   <label class="block text-[11px] font-bold text-slate-700 mb-1">
+     Exclusions de cours
+   </label>
    <div class="relative">
      <input type="number" id="settingCpeThresholdExclusion" min="0" max="100" class="w-full p-2 bg-white border border-slate-200 rounded-lg text-xs font-semibold text-slate-800 outline-none focus:ring-2 focus:ring-indigo-500">
      <span class="absolute right-2.5 top-2 text-[10px] text-slate-400">exclusion(s)</span>
@@ -1016,13 +705,22 @@
  </div>
 
  <div class="border-t border-slate-100 pt-3">
- <label class="block text-xs font-semibold text-slate-700 mb-2">Niveaux de classe concernés par l'alerte automatique</label>
- <div class="grid grid-cols-2 gap-2 bg-slate-50 p-3 rounded-xl border border-slate-200" id="settingLevelsContainer"></div>
+ <label class="block text-xs font-semibold text-slate-700 mb-2">
+ Niveaux de classe concernés par l'alerte automatique
+ </label>
+ <div class="grid grid-cols-2 gap-2 bg-slate-50 p-3 rounded-xl border border-slate-200" id="settingLevelsContainer">
+ </div>
+ <p class="text-[11px] text-slate-500 mt-1">Cochez les niveaux de classe pour lesquels l'alerte CPE automatique doit s'activer.</p>
+ </div>
+
+ <div class="bg-indigo-50/80 border border-indigo-200 rounded-xl p-3 text-xs text-indigo-800 flex items-start gap-2">
+ <i data-lucide="info" class="w-4 h-4 text-indigo-600 shrink-0 mt-0.5"></i>
+ <p>Les modifications de seuil et de niveaux seront appliquées immédiatement à l'ensemble de la base de données élèves.</p>
  </div>
 
  <div class="flex justify-end gap-2 pt-2">
- <button type="button" onclick="closeModal('settingsModal')" class="px-4 py-2 bg-slate-100 text-slate-700 text-xs font-semibold rounded-xl">Annuler</button>
- <button type="submit" class="px-4 py-2 bg-indigo-600 text-white text-xs font-semibold rounded-xl flex items-center gap-1.5">
+ <button type="button" onclick="closeModal('settingsModal')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl">Annuler</button>
+ <button type="submit" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-xl shadow-xs flex items-center gap-1.5">
  <i data-lucide="save" class="w-4 h-4"></i>
  <span>Enregistrer les réglages</span>
  </button>
@@ -1031,6 +729,7 @@
  </div>
  </div>
 
+ <!-- MODALE : AVERTISSEMENT CONFIRMATION IMPORT PRONOTE -->
  <div id="confirmImportPronoteModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs hidden z-50 flex items-center justify-center p-4">
  <div class="bg-white rounded-2xl shadow-xl max-w-sm w-full p-5 space-y-4 border border-slate-100 text-center">
  <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto">
@@ -1038,15 +737,17 @@
  </div>
  <div>
  <h3 class="font-bold text-base text-slate-800">Attention : Importation PRONOTE</h3>
- <p class="text-xs text-slate-600 mt-1.5">L'importation de nouvelles données effacera toutes les anciennes données Vie Scolaire.</p>
+ <p class="text-xs text-slate-600 mt-1.5">L'importation de nouvelles données <b>effacera toutes les anciennes données Vie Scolaire</b> existantes.</p>
+ <p class="text-xs font-semibold text-amber-700 mt-2">Souhaitez-vous continuer ?</p>
  </div>
  <div class="flex justify-center gap-2 pt-1">
- <button onclick="closeModal('confirmImportPronoteModal')" class="px-4 py-2 bg-slate-100 text-slate-700 text-xs font-semibold rounded-xl">Annuler</button>
- <button onclick="confirmAndTriggerAbsenceImport()" class="px-4 py-2 bg-amber-600 text-white text-xs font-semibold rounded-xl">Continuer</button>
+ <button onclick="closeModal('confirmImportPronoteModal')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition">Annuler</button>
+ <button onclick="confirmAndTriggerAbsenceImport()" class="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold rounded-xl shadow-xs transition">Continuer</button>
  </div>
  </div>
  </div>
 
+ <!-- MODALE : Confirmation Toggle Cantine / Sortie -->
  <div id="confirmToggleModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs hidden z-50 flex items-center justify-center p-4">
  <div class="bg-white rounded-2xl shadow-xl max-w-sm w-full p-5 space-y-4 border border-slate-100 text-center">
  <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto" id="toggleModalIcon">
@@ -1057,12 +758,13 @@
  <p class="text-xs text-slate-600 mt-1.5" id="toggleModalMessage">Êtes-vous sûr de vouloir effectuer cette modification ?</p>
  </div>
  <div class="flex justify-center gap-2 pt-1">
- <button onclick="closeModal('confirmToggleModal')" class="px-4 py-2 bg-slate-100 text-slate-700 text-xs font-semibold rounded-xl">Annuler</button>
- <button id="btnExecuteToggle" onclick="executePendingToggle()" class="px-4 py-2 bg-indigo-600 text-white text-xs font-semibold rounded-xl">Confirmer</button>
+ <button onclick="closeModal('confirmToggleModal')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition">Annuler</button>
+ <button id="btnExecuteToggle" onclick="executePendingToggle()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-xl shadow-xs transition">Confirmer</button>
  </div>
  </div>
  </div>
 
+ <!-- MODALE : Confirmation Effacement Import Vie Scolaire -->
  <div id="clearVieScolaireModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs hidden z-50 flex items-center justify-center p-4">
  <div class="bg-white rounded-2xl shadow-xl max-w-sm w-full p-5 space-y-4 border border-slate-100 text-center">
  <div class="w-12 h-12 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center mx-auto">
@@ -1070,15 +772,17 @@
  </div>
  <div>
  <h3 class="font-bold text-base text-slate-800">Effacer l'importation Vie Scolaire</h3>
- <p class="text-xs text-slate-600 mt-1.5">Êtes-vous sûr de vouloir supprimer tous les événements enregistrés ?</p>
+ <p class="text-xs text-slate-600 mt-1.5">Êtes-vous sûr de vouloir supprimer tous les événements enregistrés chez tous les élèves ?</p>
+ <p class="text-xs font-semibold text-rose-600 mt-1">Les fiches d'élèves seront conservées.</p>
  </div>
  <div class="flex justify-center gap-2 pt-1">
- <button onclick="closeModal('clearVieScolaireModal')" class="px-4 py-2 bg-slate-100 text-slate-700 text-xs font-semibold rounded-xl">Annuler</button>
- <button onclick="executeClearVieScolaireData()" class="px-4 py-2 bg-rose-600 text-white text-xs font-semibold rounded-xl">Effacer</button>
+ <button onclick="closeModal('clearVieScolaireModal')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition">Annuler</button>
+ <button onclick="executeClearVieScolaireData()" class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold rounded-xl shadow-xs transition">Effacer</button>
  </div>
  </div>
  </div>
 
+ <!-- MODALE : Effacer la base de données (RAZ Année) -->
  <div id="resetDbModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs hidden z-50 flex items-center justify-center p-4">
  <div class="bg-white rounded-2xl shadow-xl max-w-sm w-full p-5 space-y-4 border border-slate-100 text-center">
  <div class="w-12 h-12 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center mx-auto">
@@ -1086,15 +790,16 @@
  </div>
  <div>
  <h3 class="font-bold text-base text-slate-800">Effacer la Base de Données</h3>
- <p class="text-xs text-slate-500 mt-1.5">Cette action supprimera définitivement tous les élèves.</p>
+ <p class="text-xs text-slate-500 mt-1.5">Attention ! Cette action supprimera définitivement <b>TOUS LES ÉLÈVES</b> et leurs historiques pour débuter une nouvelle année.</p>
  </div>
  <div class="flex justify-center gap-2 pt-1">
- <button onclick="closeModal('resetDbModal')" class="px-4 py-2 bg-slate-100 text-slate-700 text-xs font-semibold rounded-xl">Annuler</button>
- <button onclick="executeResetDb()" class="px-4 py-2 bg-rose-600 text-white text-xs font-semibold rounded-xl">OUI, Effacer tout</button>
+ <button onclick="closeModal('resetDbModal')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition">Annuler</button>
+ <button onclick="executeResetDb()" class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold rounded-xl shadow-xs transition">OUI, Effacer tout</button>
  </div>
  </div>
  </div>
 
+ <!-- MODALE : Export PDF par Classe -->
  <div id="exportClassModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs hidden z-50 flex items-center justify-center p-4">
  <div class="bg-white rounded-2xl shadow-xl max-w-md w-full p-5 sm:p-6 space-y-4 border border-slate-100">
  <div class="flex justify-between items-center border-b pb-3 border-slate-100">
@@ -1118,16 +823,21 @@
  <div>
  <label class="block text-xs font-semibold text-slate-600 mb-1">Contenu du document PDF</label>
  <select id="exportTypeSelect" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm outline-none focus:ring-2 focus:ring-indigo-500">
- <option value="summary">Synthèse globale par élève</option>
+ <option value="summary">Synthèse globale par élève (Compteurs & Badges)</option>
  <option value="details">Historique détaillé des événements</option>
  <option value="both">Les deux (Synthèse + Historique)</option>
  <option value="unjustified">Absences injustifiées seulement (1 feuille par élève)</option>
  </select>
  </div>
 
+ <div class="bg-indigo-50/80 border border-indigo-200 rounded-xl p-3 text-xs text-indigo-800 flex items-start gap-2">
+ <i data-lucide="info" class="w-4 h-4 text-indigo-600 shrink-0 mt-0.5"></i>
+ <p>Génère un document PDF mis en page prêt pour l'impression ou l'archivage administratif.</p>
+ </div>
+
  <div class="flex justify-end gap-2 pt-2">
- <button type="button" onclick="closeModal('exportClassModal')" class="px-4 py-2 bg-slate-100 text-slate-700 text-xs font-semibold rounded-xl">Annuler</button>
- <button type="submit" class="px-4 py-2 bg-indigo-600 text-white text-xs font-semibold rounded-xl flex items-center gap-1.5">
+ <button type="button" onclick="closeModal('exportClassModal')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl">Annuler</button>
+ <button type="submit" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-xl shadow-xs flex items-center gap-1.5">
  <i data-lucide="download" class="w-4 h-4"></i>
  <span>Télécharger PDF</span>
  </button>
@@ -1136,6 +846,7 @@
  </div>
  </div>
 
+ <!-- MODALE : Ajout d'Événement / Punition -->
  <div id="eventModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs hidden z-50 flex items-center justify-center p-4">
  <div class="bg-white rounded-2xl shadow-xl max-w-md w-full p-5 sm:p-6 space-y-4 border border-slate-100">
  <div class="flex justify-between items-center border-b pb-3 border-slate-100">
@@ -1190,13 +901,14 @@
  </div>
 
  <div class="flex justify-end gap-2 pt-2">
- <button type="button" onclick="closeModal('eventModal')" class="px-4 py-2 bg-slate-100 text-slate-700 text-xs font-semibold rounded-xl">Annuler</button>
- <button type="submit" class="px-4 py-2 bg-indigo-600 text-white text-xs font-semibold rounded-xl">Enregistrer</button>
+ <button type="button" onclick="closeModal('eventModal')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl">Annuler</button>
+ <button type="submit" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-xl shadow-xs">Enregistrer</button>
  </div>
  </form>
  </div>
  </div>
 
+ <!-- MODALE : Nouvel Élève -->
  <div id="addStudentModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs hidden z-50 flex items-center justify-center p-4">
  <div class="bg-white rounded-2xl shadow-xl max-w-md w-full p-5 sm:p-6 space-y-4 border border-slate-100">
  <div class="flex justify-between items-center border-b pb-3 border-slate-100">
@@ -1265,13 +977,14 @@
  </div>
 
  <div class="flex justify-end gap-2 pt-2">
- <button type="button" onclick="closeModal('addStudentModal')" class="px-4 py-2 bg-slate-100 text-slate-700 text-xs font-semibold rounded-xl">Annuler</button>
- <button type="submit" class="px-4 py-2 bg-emerald-600 text-white text-xs font-semibold rounded-xl">Créer l'Élève</button>
+ <button type="button" onclick="closeModal('addStudentModal')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl">Annuler</button>
+ <button type="submit" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl shadow-xs">Créer l'Élève</button>
  </div>
  </form>
  </div>
  </div>
 
+ <!-- MODALE : Confirmation de Suppression Élève -->
  <div id="deleteModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs hidden z-50 flex items-center justify-center p-4">
  <div class="bg-white rounded-2xl shadow-xl max-w-sm w-full p-5 space-y-4 border border-slate-100 text-center">
  <div class="w-12 h-12 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto">
@@ -1282,124 +995,21 @@
  <p class="text-xs text-slate-500 mt-1">Êtes-vous sûr de vouloir supprimer cet élève ? Action irréversible.</p>
  </div>
  <div class="flex justify-center gap-2 pt-1">
- <button onclick="closeModal('deleteModal')" class="px-4 py-2 bg-slate-100 text-slate-700 text-xs font-semibold rounded-xl">Annuler</button>
- <button onclick="executeDeleteStudent()" class="px-4 py-2 bg-red-600 text-white text-xs font-semibold rounded-xl">Supprimer</button>
+ <button onclick="closeModal('deleteModal')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl">Annuler</button>
+ <button onclick="executeDeleteStudent()" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold rounded-xl shadow-xs">Supprimer</button>
  </div>
  </div>
  </div>
 
- <!-- MODALES PERMANENCE -->
- <div id="modal-aed" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 no-print">
- <div class="bg-white rounded-3xl max-w-md w-full shadow-2xl overflow-hidden">
- <div class="px-6 py-4 bg-slate-900 text-white flex justify-between items-center">
- <h3 class="font-bold text-base flex items-center gap-2">
- <i data-lucide="user-plus" class="w-5 h-5 text-brand-500"></i>
- Ajouter un Surveillant (AED)
- </h3>
- <button onclick="closeModal('modal-aed')" class="text-slate-400 hover:text-white">
- <i data-lucide="x" class="w-5 h-5"></i>
- </button>
- </div>
- <form onsubmit="handleAddAed(event)" class="p-6 space-y-4">
- <div>
- <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Nom & Prénom de l'AED</label>
- <input type="text" id="new-aed-name" placeholder="ex: Mme DUPONT Sarah" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:outline-none focus:ring-2 focus:ring-brand-500">
- </div>
- <div class="flex justify-end gap-2 pt-2">
- <button type="button" onclick="closeModal('modal-aed')" class="px-4 py-2.5 bg-slate-100 text-slate-700 rounded-xl font-medium text-sm">Annuler</button>
- <button type="submit" class="px-4 py-2.5 bg-brand-600 text-white rounded-xl font-bold text-sm">Enregistrer L'AED</button>
- </div>
- </form>
- </div>
- </div>
-
- <div id="modal-student" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 no-print">
- <div class="bg-white rounded-3xl max-w-md w-full shadow-2xl overflow-hidden">
- <div class="px-6 py-4 bg-slate-900 text-white flex justify-between items-center">
- <h3 class="font-bold text-base flex items-center gap-2">
- <i data-lucide="user-plus" class="w-5 h-5 text-brand-500"></i>
- Ajouter un Élève (Hors-liste)
- </h3>
- <button onclick="closeModal('modal-student')" class="text-slate-400 hover:text-white">
- <i data-lucide="x" class="w-5 h-5"></i>
- </button>
- </div>
- <form onsubmit="handleAddUnlistedStudent(event)" class="p-6 space-y-4">
- <div>
- <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Nom de famille</label>
- <input type="text" id="new-student-nom" placeholder="ex: MARTIN" required class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 uppercase">
- </div>
- <div>
- <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Prénom</label>
- <input type="text" id="new-student-prenom" placeholder="ex: Lucas" required class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900">
- </div>
- <div>
- <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Classe</label>
- <input type="text" id="new-student-classe" placeholder="ex: 6°A, 3°B..." required class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 uppercase">
- </div>
- <div>
- <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Statut initial</label>
- <select id="new-student-status" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900">
- <option value="Permanence">Permanence</option>
- <option value="Exclusion">Exclusion</option>
- <option value="Autre">Autre (Retenue / Travail)</option>
- </select>
- </div>
- <div class="flex justify-end gap-2 pt-2">
- <button type="button" onclick="closeModal('modal-student')" class="px-4 py-2.5 bg-slate-100 text-slate-700 rounded-xl font-medium text-sm">Annuler</button>
- <button type="submit" class="px-4 py-2.5 bg-slate-900 text-white rounded-xl font-bold text-sm">Ajouter à l'appel</button>
- </div>
- </form>
- </div>
- </div>
-
- <div id="modal-history" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 sm:p-4 no-print">
- <div class="bg-white rounded-3xl max-w-3xl w-full shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
- <div class="px-6 py-4 bg-slate-900 text-white flex justify-between items-center shrink-0">
- <div class="flex items-center gap-2">
- <i data-lucide="history" class="w-5 h-5 text-brand-500"></i>
- <h3 class="font-bold text-base">Historique des Listes de Permanence</h3>
- </div>
- <button onclick="closeModal('modal-history')" class="text-slate-400 hover:text-white">
- <i data-lucide="x" class="w-5 h-5"></i>
- </button>
- </div>
-
- <div class="p-4 bg-slate-50 border-b border-slate-200 space-y-3 shrink-0">
- <div class="relative w-full">
- <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
- <i data-lucide="search" class="w-4 h-4"></i>
- </div>
- <input type="text" id="history-search-input" oninput="filterHistoryList()" placeholder="Rechercher..." class="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-semibold">
- </div>
- <div class="flex justify-between items-center text-xs text-slate-500 px-1 font-medium">
- <span id="history-count-text">0 liste(s) archivée(s)</span>
- <button onclick="clearAllHistory()" class="text-rose-600 hover:underline font-bold">Vider tout l'historique</button>
- </div>
- </div>
-
- <div id="history-list-container" class="p-4 overflow-y-auto space-y-3 flex-1"></div>
-
- <div class="p-4 border-t border-slate-100 flex justify-end shrink-0 bg-white">
- <button onclick="closeModal('modal-history')" class="px-5 py-2.5 bg-slate-900 text-white rounded-xl font-bold text-sm">Fermer</button>
- </div>
- </div>
- </div>
-
+ <!-- JAVASCRIPT APPLICATION -->
  <script>
  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
  // =========================================================
- // 1. STATE & CONSTANTS (VIE SCOLAIRE & PERMANENCE)
+ // 1. STATE & CONSTANTS
  // =========================================================
  const STORAGE_KEY = 'viescolaire_students_db_v6';
  const SETTINGS_STORAGE_KEY = 'viescolaire_settings_v1';
-
- const STORAGE_AEDS = 'perm_app_aeds_list_v4';
- const STORAGE_SELECTED_AED = 'perm_app_selected_aed_v4';
- const STORAGE_DATABASE = 'perm_app_students_db_v4';
- const STORAGE_SESSION = 'perm_app_current_session_v4';
- const STORAGE_HISTORY = 'perm_app_history_v4';
 
  let appSettings = {
  cpeThreshold: 15,
@@ -1427,15 +1037,6 @@
  let lastScrollPosition = 0;
  let currentSearchSuggestions = [];
 
- // STATE PERMANENCE
- let aeds = [];
- let selectedAed = '';
- let studentDatabase = [];
- let sessionStudents = [];
- let historyList = [];
- let searchMatches = [];
- let selectedDropdownIndex = -1;
-
  const STANDARD_LEVELS = [
  { code: '6', label: '6ème' },
  { code: '5', label: '5ème' },
@@ -1449,36 +1050,102 @@
  const demoData = [
  {
  id: '10000000-0000-4000-8000-000000000001',
- nom: 'ABASS', prenom: 'Oday', classe: '4 D', regime: 'Demi-pensionnaire', autorisationSortie: 'Oui', alerteCPE: false, docNonRendu: false, profPrincipal: 'M. Thomas (Maths)', badgeRepere: 'REP-101', badgeCantine: 'DP-30982', events: []
+ nom: 'ABASS',
+ prenom: 'Oday',
+ classe: '4 D',
+ regime: 'Demi-pensionnaire',
+ autorisationSortie: 'Oui',
+ alerteCPE: false,
+ docNonRendu: false,
+ profPrincipal: 'M. Thomas (Maths)',
+ badgeRepere: 'REP-101',
+ badgeCantine: 'DP-30982',
+ events: []
  },
  {
  id: '10000000-0000-4000-8000-000000000002',
- nom: 'ABDELLAOUI', prenom: 'Abdellah', classe: '4 D', regime: 'Externe', autorisationSortie: 'Non', alerteCPE: false, docNonRendu: false, profPrincipal: 'Mme Bernard (Français)', badgeRepere: '', badgeCantine: '', events: []
+ nom: 'ABDELLAOUI',
+ prenom: 'Abdellah',
+ classe: '4 D',
+ regime: 'Externe',
+ autorisationSortie: 'Non',
+ alerteCPE: false,
+ docNonRendu: false,
+ profPrincipal: 'Mme Bernard (Français)',
+ badgeRepere: '',
+ badgeCantine: '',
+ events: []
  },
  {
  id: '10000000-0000-4000-8000-000000000003',
- nom: 'ABDELLAOUI', prenom: 'Malik', classe: '6 A', regime: 'Demi-pensionnaire', autorisationSortie: 'Oui', alerteCPE: false, docNonRendu: false, profPrincipal: 'M. Thomas (Maths)', badgeRepere: 'REP-103', badgeCantine: 'DP-30985', events: []
+ nom: 'ABDELLAOUI',
+ prenom: 'Malik',
+ classe: '6 A',
+ regime: 'Demi-pensionnaire',
+ autorisationSortie: 'Oui',
+ alerteCPE: false,
+ docNonRendu: false,
+ profPrincipal: 'M. Thomas (Maths)',
+ badgeRepere: 'REP-103',
+ badgeCantine: 'DP-30985',
+ events: []
+ },
+ {
+ id: '10000000-0000-4000-8000-000000000004',
+ nom: 'ABDERRAHIM',
+ prenom: 'Hamza',
+ classe: '4 B',
+ regime: 'Demi-pensionnaire',
+ autorisationSortie: 'Oui',
+ alerteCPE: false,
+ docNonRendu: false,
+ profPrincipal: 'Mme Martin',
+ badgeRepere: '',
+ badgeCantine: '',
+ events: []
+ },
+ {
+ id: '10000000-0000-4000-8000-000000000005',
+ nom: 'ABDILLAHI',
+ prenom: 'Kamila',
+ classe: '3 C',
+ regime: 'Demi-pensionnaire',
+ autorisationSortie: 'Oui',
+ alerteCPE: false,
+ docNonRendu: false,
+ profPrincipal: 'M. Thomas',
+ badgeRepere: '',
+ badgeCantine: '',
+ events: []
  }
  ];
 
  function toggleBackupDropdown(event) {
  if (event) event.stopPropagation();
  const dropdown = document.getElementById('backupDropdown');
- if (dropdown) dropdown.classList.toggle('hidden');
+ if (dropdown) {
+ dropdown.classList.toggle('hidden');
+ }
  }
 
+ // HELPER COULEURS DE CLASSE
  function getClassBadgeColorClass(classeStr) {
  if (!classeStr) return 'bg-slate-700 text-white border-slate-600';
  const str = String(classeStr).trim().toLowerCase();
- if (str.startsWith('6')) return 'bg-rose-500 text-white border-rose-600';
- if (str.startsWith('5')) return 'bg-emerald-500 text-white border-emerald-600';
- if (str.startsWith('4')) return 'bg-amber-500 text-slate-950 font-bold border-amber-600';
- if (str.startsWith('3')) return 'bg-blue-600 text-white border-blue-700';
+ if (str.startsWith('6')) {
+ return 'bg-rose-500 text-white border-rose-600';
+ } else if (str.startsWith('5')) {
+ return 'bg-emerald-500 text-white border-emerald-600';
+ } else if (str.startsWith('4')) {
+ return 'bg-amber-500 text-slate-950 font-bold border-amber-600';
+ } else if (str.startsWith('3')) {
+ return 'bg-blue-600 text-white border-blue-700';
+ }
  return 'bg-indigo-600 text-white border-indigo-700';
  }
 
  // =========================================================
- // 2. UTILS
+ // 2. UTILS & EXTRACTION
  // =========================================================
  function sanitize(str) {
  if (str === null || str === undefined) return '';
@@ -1493,7 +1160,12 @@
  function loadSettings() {
  const saved = localStorage.getItem(SETTINGS_STORAGE_KEY);
  if (saved) {
- try { Object.assign(appSettings, JSON.parse(saved)); } catch(e) {}
+ try {
+ const parsed = JSON.parse(saved);
+ appSettings = Object.assign(appSettings, parsed);
+ } catch(e) {
+ console.error("Erreur chargement réglages", e);
+ }
  }
  }
 
@@ -1533,14 +1205,21 @@
  const absInjustifiees = countUnjustifiedAbsences(student);
 
  const reasons = [];
+
  const tAbsInj = parseInt(appSettings.cpeThresholdAbsInjustifiees ?? appSettings.cpeThreshold, 10);
- if (tAbsInj > 0 && absInjustifiees >= tAbsInj) reasons.push(`${absInjustifiees} abs. injustifiée(s) (seuil: ${tAbsInj})`);
+ if (tAbsInj > 0 && absInjustifiees >= tAbsInj) {
+ reasons.push(`${absInjustifiees} abs. injustifiée(s) (seuil: ${tAbsInj})`);
+ }
 
  const tRetards = parseInt(appSettings.cpeThresholdRetards, 10);
- if (tRetards > 0 && retards >= tRetards) reasons.push(`${retards} retard(s) (seuil: ${tRetards})`);
+ if (tRetards > 0 && retards >= tRetards) {
+ reasons.push(`${retards} retard(s) (seuil: ${tRetards})`);
+ }
 
  const tAbs = parseInt(appSettings.cpeThresholdAbsences, 10);
- if (tAbs > 0 && absences >= tAbs) reasons.push(`${absences} absence(s) (seuil: ${tAbs})`);
+ if (tAbs > 0 && absences >= tAbs) {
+ reasons.push(`${absences} absence(s) (seuil: ${tAbs})`);
+ }
 
  const tRetenues = parseFloat(appSettings.cpeThresholdRetenues);
  if (tRetenues > 0 && retenues >= tRetenues) {
@@ -1549,12 +1228,20 @@
  }
 
  const tEdt = parseInt(appSettings.cpeThresholdEmploiBloque, 10);
- if (tEdt > 0 && emploiBloque >= tEdt) reasons.push(`${emploiBloque} EDT bloqué(s) (seuil: ${tEdt})`);
+ if (tEdt > 0 && emploiBloque >= tEdt) {
+ reasons.push(`${emploiBloque} EDT bloqué(s) (seuil: ${tEdt})`);
+ }
 
  const tExcl = parseInt(appSettings.cpeThresholdExclusion, 10);
- if (tExcl > 0 && exclusion >= tExcl) reasons.push(`${exclusion} exclusion(s) de cours (seuil: ${tExcl})`);
+ if (tExcl > 0 && exclusion >= tExcl) {
+ reasons.push(`${exclusion} exclusion(s) de cours (seuil: ${tExcl})`);
+ }
 
- return { hasExceeded: reasons.length > 0, reasons, summaryText: reasons.join(', ') };
+ return {
+ hasExceeded: reasons.length > 0,
+ reasons: reasons,
+ summaryText: reasons.join(', ')
+ };
  }
 
  function updateAutoCpeAlerts() {
@@ -1611,12 +1298,23 @@
  if (!text) return null;
  let isoMatch = text.match(/(\d{4})[-/](\d{1,2})[-/](\d{1,2})(?:[T\s]+(\d{1,2})[:h](\d{2}))?/i);
  if (isoMatch) {
- return `${isoMatch[1]}-${isoMatch[2].padStart(2, '0')}-${isoMatch[3].padStart(2, '0')}T${(isoMatch[4]||'08').padStart(2, '0')}:${(isoMatch[5]||'00').padStart(2, '0')}`;
+ let y = isoMatch[1];
+ let m = isoMatch[2].padStart(2, '0');
+ let d = isoMatch[3].padStart(2, '0');
+ let hh = isoMatch[4] ? isoMatch[4].padStart(2, '0') : '08';
+ let mm = isoMatch[5] ? isoMatch[5].padStart(2, '0') : '00';
+ return `${y}-${m}-${d}T${hh}:${mm}`;
  }
+
  let frMatch = text.match(/(\d{1,2})[/.-](\d{1,2})[/.-](\d{2,4})(?:\s*(?:à|a)?\s*(\d{1,2})[:h](\d{2}))?/i);
  if (frMatch) {
- let y = frMatch[3].length === 2 ? '20' + frMatch[3] : frMatch[3];
- return `${y}-${frMatch[2].padStart(2, '0')}-${frMatch[1].padStart(2, '0')}T${(frMatch[4]||'08').padStart(2, '0')}:${(frMatch[5]||'00').padStart(2, '0')}`;
+ let d = frMatch[1].padStart(2, '0');
+ let m = frMatch[2].padStart(2, '0');
+ let y = frMatch[3];
+ if (y.length === 2) y = '20' + y;
+ let hh = frMatch[4] ? frMatch[4].padStart(2, '0') : '08';
+ let mm = frMatch[5] ? frMatch[5].padStart(2, '0') : '00';
+ return `${y}-${m}-${d}T${hh}:${mm}`;
  }
  return null;
  }
@@ -1627,10 +1325,18 @@
 
  if (navigator.canShare && navigator.canShare({ files: [file] })) {
  try {
- await navigator.share({ files: [file], title: filename });
+ await navigator.share({
+ files: [file],
+ title: filename,
+ text: 'Sauvegarde VieScolaire Pro'
+ });
  return;
  } catch (err) {
- if (err.name === 'AbortError') return;
+ if (err.name !== 'AbortError') {
+ console.warn("Changement vers téléchargement classique.", err);
+ } else {
+ return;
+ }
  }
  }
 
@@ -1649,25 +1355,14 @@
  if (modal) modal.classList.add('hidden');
  }
 
- function openModal(id) {
- const modal = document.getElementById(id);
- if (modal) modal.classList.remove('hidden');
- }
-
  // =========================================================
- // 3. LIFECYCLE & STORAGE
+ // 3. STORAGE & LIFECYCLE
  // =========================================================
  window.onload = function() {
  loadSettings();
  loadStorage();
- loadPermanenceData();
  populateClassFilter();
  renderStudentsGrid();
- renderAedDropdown();
- renderSessionList();
- updateStats();
- updateDbCountBadge();
- detectDeviceMode();
  
  const searchInputEl = document.getElementById('searchInput');
  if (searchInputEl) {
@@ -1675,12 +1370,18 @@
  if (event.key === 'Enter') {
  event.preventDefault();
  const studentToOpen = currentSearchSuggestions.length > 0 ? currentSearchSuggestions[0].id : null;
+ 
+ // Effacer le champ de recherche et réinitialiser l'affichage
  searchInputEl.value = '';
  document.getElementById('clearSearchBtn').classList.add('hidden');
  hideSearchDropdown();
  searchInputEl.blur();
- if (studentToOpen) openStudentDetail(studentToOpen);
- else filterStudents();
+ 
+ if (studentToOpen) {
+ openStudentDetail(studentToOpen);
+ } else {
+ filterStudents();
+ }
  }
  });
  }
@@ -1698,26 +1399,9 @@
  backupDropdown.classList.add('hidden');
  }
  }
-
- const permSearch = document.getElementById('search-input')?.closest('.relative');
- if (permSearch && !permSearch.contains(e.target)) {
- hideAutocompleteDropdown();
- }
- });
-
- document.addEventListener('keydown', function(e) {
- if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
- e.preventDefault();
- const searchInput = document.getElementById('search-input');
- if (searchInput) {
- searchInput.focus();
- searchInput.select();
- }
- }
  });
 
  lucide.createIcons();
- window.addEventListener('resize', detectDeviceMode);
  };
 
  function loadStorage() {
@@ -1731,6 +1415,7 @@
  });
  updateAutoCpeAlerts();
  } catch(e) {
+ console.error("Erreur de lecture", e);
  students = demoData;
  saveStorage();
  }
@@ -1745,44 +1430,16 @@
  localStorage.setItem(STORAGE_KEY, JSON.stringify(students));
  }
 
- function loadPermanenceData() {
- const storedAeds = localStorage.getItem(STORAGE_AEDS);
- aeds = storedAeds ? JSON.parse(storedAeds) : ['maissenne', 'boutsy', 'yves', 'houssam', 'nourlane', 'sana', 'amel', 'balou', 'malik'];
- if (!storedAeds) saveAeds();
-
- const storedSelectedAed = localStorage.getItem(STORAGE_SELECTED_AED);
- selectedAed = (storedSelectedAed && aeds.includes(storedSelectedAed)) ? storedSelectedAed : (aeds[0] || 'AED Général');
-
- const storedDb = localStorage.getItem(STORAGE_DATABASE);
- studentDatabase = storedDb ? JSON.parse(storedDb) : [];
-
- const storedSession = localStorage.getItem(STORAGE_SESSION);
- sessionStudents = storedSession ? JSON.parse(storedSession) : [];
-
- const storedHistory = localStorage.getItem(STORAGE_HISTORY);
- historyList = storedHistory ? JSON.parse(storedHistory) : [];
- }
-
- function saveAeds() { localStorage.setItem(STORAGE_AEDS, JSON.stringify(aeds)); }
- function saveSelectedAed() { localStorage.setItem(STORAGE_SELECTED_AED, selectedAed); }
- function saveStudentDatabase() { localStorage.setItem(STORAGE_DATABASE, JSON.stringify(studentDatabase)); updateDbCountBadge(); }
- function saveSessionStudents() { localStorage.setItem(STORAGE_SESSION, JSON.stringify(sessionStudents)); }
- function saveHistory() { localStorage.setItem(STORAGE_HISTORY, JSON.stringify(historyList)); }
-
- function updateDbCountBadge() {
- const badge = document.getElementById('db-count-badge');
- if (badge) badge.textContent = `Base : ${studentDatabase.length} élève(s)`;
- }
-
  // =========================================================
- // 4. RECHERCHE INTERACTIVE & NAVIGATION VIE SCOLAIRE
+ // 4. RECHERCHE INTERACTIVE AVEC MENU DÉROULANT
  // =========================================================
  function handleSearchInput() {
  const query = document.getElementById('searchInput').value.toLowerCase().trim();
  const clearBtn = document.getElementById('clearSearchBtn');
  
- if (query.length > 0) clearBtn.classList.remove('hidden');
- else {
+ if (query.length > 0) {
+ clearBtn.classList.remove('hidden');
+ } else {
  clearBtn.classList.add('hidden');
  hideSearchDropdown();
  filterStudents();
@@ -1790,13 +1447,16 @@
  }
 
  const selectedClass = document.getElementById('classFilter').value;
+
  currentSearchSuggestions = students.filter(student => {
  const fullName = `${student.nom} ${student.prenom}`.toLowerCase();
  const reverseFullName = `${student.prenom} ${student.nom}`.toLowerCase();
  const badge = (student.badgeCantine || '').toLowerCase();
  const repere = (student.badgeRepere || '').toLowerCase();
+ 
  const matchesSearch = fullName.includes(query) || reverseFullName.includes(query) || (student.classe || '').toLowerCase().includes(query) || badge.includes(query) || repere.includes(query);
  const matchesClass = selectedClass === "" || student.classe === selectedClass;
+
  return matchesSearch && matchesClass;
  });
 
@@ -1807,8 +1467,12 @@
  function renderSearchDropdown(matches) {
  const dropdown = document.getElementById('searchDropdown');
  dropdown.innerHTML = '';
+
  if (matches.length === 0) {
- dropdown.innerHTML = `<div class="p-4 text-center text-xs text-slate-400">Aucun élève trouvé</div>`;
+ dropdown.innerHTML = `
+ <div class="p-4 text-center text-xs text-slate-400">
+ Aucun élève ne correspond à votre recherche
+ </div>`;
  dropdown.classList.remove('hidden');
  return;
  }
@@ -1821,19 +1485,31 @@
 
  const item = document.createElement('div');
  item.className = "flex items-center justify-between p-3 hover:bg-slate-50 cursor-pointer transition";
- item.onclick = () => { openStudentDetail(safeId); hideSearchDropdown(); };
+ item.onclick = () => {
+ openStudentDetail(safeId);
+ hideSearchDropdown();
+ };
 
  item.innerHTML = `
  <div class="flex items-center space-x-3">
- <div class="w-9 h-9 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-xs shrink-0">${initP}${initN}</div>
+ <div class="w-9 h-9 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-xs">
+ ${initP}${initN}
+ </div>
  <div>
  <h4 class="font-bold text-slate-800 text-sm leading-tight">${sanitize(s.nom ? s.nom.toUpperCase() : '')} ${sanitize(s.prenom)}</h4>
  <p class="text-[11px] text-slate-400">Classe : ${sanitize(s.classe)}</p>
  </div>
  </div>
+
  <div class="flex items-center space-x-2">
- <span class="px-2.5 py-1 rounded-full text-xs font-bold ${badgeClass}">${sanitize(s.classe)}</span>
- </div>`;
+ <span class="px-2.5 py-1 rounded-full text-xs font-bold shadow-xs ${badgeClass}">
+ ${sanitize(s.classe)}
+ </span>
+ <div class="w-6 h-6 rounded-full border border-emerald-500/40 text-emerald-600 flex items-center justify-center hover:bg-emerald-50">
+ <i data-lucide="plus" class="w-4 h-4"></i>
+ </div>
+ </div>
+ `;
  dropdown.appendChild(item);
  });
 
@@ -1847,123 +1523,15 @@
  }
 
  function clearSearch() {
- document.getElementById('searchInput').value = '';
+ const input = document.getElementById('searchInput');
+ input.value = '';
  document.getElementById('clearSearchBtn').classList.add('hidden');
  hideSearchDropdown();
  filterStudents();
  }
 
  // =========================================================
- // 5. ROUTAGE PAGES
- // =========================================================
- function showListPage() {
- stopBadgeScanner();
- hideSearchDropdown();
- document.getElementById('pageDetail').classList.add('hidden');
- document.getElementById('pageRecap').classList.add('hidden');
- document.getElementById('pagePermanence').classList.add('hidden');
- document.getElementById('pageList').classList.remove('hidden');
- selectedStudentId = null;
- filterStudents();
- window.scrollTo({ top: lastScrollPosition, behavior: 'instant' });
- }
-
- function showRecapPage() {
- stopBadgeScanner();
- hideSearchDropdown();
- document.getElementById('pageList').classList.add('hidden');
- document.getElementById('pageDetail').classList.add('hidden');
- document.getElementById('pagePermanence').classList.add('hidden');
- document.getElementById('pageRecap').classList.remove('hidden');
-
- populateClassFilter();
- updateRecapBadges();
- setRecapViewMode(currentRecapViewMode);
- }
-
- function showPermanencePage() {
- stopBadgeScanner();
- hideSearchDropdown();
- document.getElementById('pageList').classList.add('hidden');
- document.getElementById('pageDetail').classList.add('hidden');
- document.getElementById('pageRecap').classList.add('hidden');
- document.getElementById('pagePermanence').classList.remove('hidden');
-
- renderAedDropdown();
- renderSessionList();
- updateStats();
- updateDbCountBadge();
- window.scrollTo(0, 0);
- lucide.createIcons();
- }
-
- function openStudentDetail(id) {
- stopBadgeScanner();
- hideSearchDropdown();
- lastScrollPosition = window.scrollY || document.documentElement.scrollTop || 0;
- selectedStudentId = id;
- showOnlyUnjustifiedAbsences = false;
- currentHistoryFilter = 'all';
- updateUnjustifiedBtnStyle();
- setHistoryTab('all');
-
- const student = students.find(s => s.id === id);
- if (!student) return;
-
- document.getElementById('detailName').textContent = `${(student.nom || '').toUpperCase()} ${student.prenom || ''}`;
- const initP = student.prenom && student.prenom.length > 0 ? student.prenom[0] : '-';
- const initN = student.nom && student.nom.length > 0 ? student.nom[0] : '-';
- document.getElementById('detailInitials').textContent = `${initP}${initN}`;
- 
- const detailClassEl = document.getElementById('detailClass');
- detailClassEl.textContent = student.classe || '';
- detailClassEl.className = `text-xs px-2.5 py-0.5 rounded-full border font-bold text-white ${getClassBadgeColorClass(student.classe)}`;
-
- document.getElementById('detailRegime').textContent = student.regime || '';
- document.getElementById('detailProf').textContent = student.profPrincipal || 'Non renseigné';
-
- updateDetailCardBadgesAndToggles(student);
-
- const canteenIndicator = document.getElementById('detailCanteenIndicator');
- const qrBox = document.getElementById('detailCanteenQRBox');
- 
- if (student.regime === 'Demi-pensionnaire') {
- canteenIndicator.classList.remove('hidden');
- canteenIndicator.classList.add('flex');
- qrBox.classList.remove('hidden');
- qrBox.classList.add('flex');
- document.getElementById('canteenBadgeInput').value = student.badgeCantine || '';
- generateCanteenQRCode(student.badgeCantine || student.id);
- } else {
- canteenIndicator.classList.add('hidden');
- canteenIndicator.classList.remove('flex');
- qrBox.classList.add('hidden');
- qrBox.classList.remove('flex');
- }
-
- const exitBadge = document.getElementById('detailExitBadge');
- if (student.autorisationSortie === 'Oui') {
- exitBadge.textContent = "Autorisation de sortie: OUI";
- exitBadge.className = "text-xs px-2.5 py-0.5 rounded-full border bg-emerald-500/20 text-emerald-200 border-emerald-400/30 font-medium";
- } else {
- exitBadge.textContent = "INTERDIT DE SORTIE";
- exitBadge.className = "text-xs px-2.5 py-0.5 rounded-full border bg-rose-500/30 text-rose-200 border-rose-400/40 font-bold animate-pulse";
- }
-
- updateCounters(student);
- renderHistoryTable(student);
-
- document.getElementById('pageList').classList.add('hidden');
- document.getElementById('pageRecap').classList.add('hidden');
- document.getElementById('pagePermanence').classList.add('hidden');
- document.getElementById('pageDetail').classList.remove('hidden');
-
- window.scrollTo(0, 0);
- lucide.createIcons();
- }
-
- // =========================================================
- // 6. SETTINGS & RECAP RENDERERS
+ // 5. GESTION DES RÉGLAGES
  // =========================================================
  function openSettingsModal() {
  loadSettings();
@@ -1982,6 +1550,7 @@
  const container = document.getElementById('settingLevelsContainer');
  if (!container) return;
  container.innerHTML = '';
+
  const detectedClasses = [...new Set(students.map(s => s.classe))].filter(Boolean);
  const customLevels = new Set();
  
@@ -2043,6 +1612,9 @@
  alert("Réglages des seuils enregistrés avec succès.");
  }
 
+ // =========================================================
+ // 6. DOM RENDERERS
+ // =========================================================
  function populateClassFilter() {
  const select = document.getElementById('classFilter');
  const exportSelect = document.getElementById('exportClassSelect');
@@ -2055,16 +1627,19 @@
  
  classes.forEach(c => {
  const opt = document.createElement('option');
- opt.value = c; opt.textContent = c;
+ opt.value = c;
+ opt.textContent = c;
  select.appendChild(opt);
 
  const opt2 = document.createElement('option');
- opt2.value = c; opt2.textContent = c;
+ opt2.value = c;
+ opt2.textContent = c;
  exportSelect.appendChild(opt2);
 
  if (recapSelect) {
  const opt3 = document.createElement('option');
- opt3.value = c; opt3.textContent = c;
+ opt3.value = c;
+ opt3.textContent = c;
  recapSelect.appendChild(opt3);
  }
  });
@@ -2095,6 +1670,7 @@
  const isCanteen = student.regime === 'Demi-pensionnaire';
  const isAlerteCpe = !!student.alerteCPE;
  const isDocNonRendu = !!student.docNonRendu;
+
  const thresholdInfo = getExceededThresholdsInfo(student);
 
  const safeNom = sanitize(student.nom ? student.nom.toUpperCase() : '');
@@ -2105,10 +1681,11 @@
  const safeId = sanitize(student.id);
 
  const badgeClass = getClassBadgeColorClass(student.classe);
- const formattedRetenues = Number.isInteger(retenues) ? retenues : retenues.toFixed(1);
 
  const card = document.createElement('div');
  card.className = `rounded-2xl p-4 sm:p-5 border shadow-2xs hover:shadow-md transition relative flex flex-col justify-between group min-h-[230px] ${isNoExit ? 'card-no-exit' : 'bg-white border-slate-200/90'}`;
+
+ const formattedRetenues = Number.isInteger(retenues) ? retenues : retenues.toFixed(1);
 
  card.innerHTML = `
  <div>
@@ -2172,6 +1749,7 @@
  ` : ''}
 
  <div class="mt-3.5 pt-2.5 border-t ${isNoExit ? 'border-red-200/60' : 'border-slate-100'} flex flex-col gap-2 text-xs">
+ 
  <div class="grid grid-cols-2 gap-1.5 bg-slate-50 p-1.5 rounded-xl border border-slate-200/70">
  <div class="flex items-center justify-between gap-1 px-1">
  <span class="text-[10px] font-semibold text-rose-800 flex items-center gap-1"><i data-lucide="siren" class="w-3 h-3 text-rose-600"></i> CPE</span>
@@ -2295,18 +1873,24 @@
  function updateUnjustifiedBtnStyle() {
  const btn = document.getElementById('btnFilterUnjustified');
  if (!btn) return;
- btn.className = showOnlyUnjustifiedAbsences 
- ? "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-rose-600 text-white border border-rose-600 shadow-2xs transition no-print shrink-0"
- : "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-rose-50 hover:text-rose-700 border border-slate-200 transition no-print shrink-0";
+ if (showOnlyUnjustifiedAbsences) {
+ btn.className = "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-rose-600 text-white border border-rose-600 shadow-2xs transition no-print shrink-0";
+ } else {
+ btn.className = "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-rose-50 hover:text-rose-700 border border-slate-200 transition no-print shrink-0";
+ }
  }
 
  function setHistoryTab(cat) {
  currentHistoryFilter = cat;
  const tabs = document.querySelectorAll('.hist-tab');
- tabs.forEach(t => t.className = "hist-tab shrink-0 px-3 py-1.5 rounded-xl text-xs font-semibold transition text-slate-600 hover:bg-slate-200/70");
+ tabs.forEach(t => {
+ t.className = "hist-tab shrink-0 px-3 py-1.5 rounded-xl text-xs font-semibold transition text-slate-600 hover:bg-slate-200/70";
+ });
 
  const activeTab = document.getElementById(`hist-tab-${cat}`);
- if (activeTab) activeTab.className = "hist-tab shrink-0 px-3 py-1.5 rounded-xl text-xs font-semibold transition bg-indigo-600 text-white shadow-2xs";
+ if (activeTab) {
+ activeTab.className = "hist-tab shrink-0 px-3 py-1.5 rounded-xl text-xs font-semibold transition bg-indigo-600 text-white shadow-2xs";
+ }
 
  if (selectedStudentId) {
  const student = students.find(s => s.id === selectedStudentId);
@@ -2335,7 +1919,8 @@
  if (currentHistoryFilter === 'abs_injustifiee') {
  const isAbs = e.type === 'absence' || (e.pronoteType && e.pronoteType.toLowerCase().includes('absence injustifiée'));
  const hasOui = /\boui\b/i.test(e.motif || '');
- return isAbs && !(e.justified === 'Oui' || hasOui);
+ const isJust = e.justified === 'Oui' || hasOui;
+ return isAbs && !isJust;
  }
  return true;
  });
@@ -2348,7 +1933,9 @@
  if (events.length === 0) {
  emptyHistory.classList.remove('hidden');
  return;
- } else emptyHistory.classList.add('hidden');
+ } else {
+ emptyHistory.classList.add('hidden');
+ }
 
  events.forEach(ev => {
  const tr = document.createElement('tr');
@@ -2360,6 +1947,7 @@
  else if (ev.type === 'retenue') { badgeClass = "bg-purple-100 text-purple-800"; typeLabel = ev.pronoteType ? `RETENUE (${ev.pronoteType.toUpperCase()})` : "RETENUE"; }
  else if (ev.type === 'emploi_bloque') { badgeClass = "bg-amber-100 text-amber-900"; typeLabel = "EMPLOI DU TEMPS BLOQUÉ"; }
  else if (ev.type === 'exclusion') { badgeClass = "bg-rose-100 text-rose-900"; typeLabel = "EXCLUSION DE COURS"; }
+ else if (ev.type === 'observation') { badgeClass = "bg-blue-100 text-blue-800"; typeLabel = "OBSERVATION"; }
  else if (ev.type === 'abs_injustifiee' || (ev.pronoteType && ev.pronoteType.toLowerCase().includes('absence injustifiée'))) { badgeClass = "bg-red-100 text-red-800 font-bold"; typeLabel = "ABSENCE INJUSTIFIÉE"; }
  else if (ev.type === 'carnet') { badgeClass = "bg-slate-200 text-slate-800"; typeLabel = "OUBLI CARNET"; }
 
@@ -2367,15 +1955,19 @@
  const motifStatut = getStatutDetailFromMotif(ev.motif);
  let detailText = "--";
 
- const isJustifiedEvent = ev.justified === 'Oui' || /\boui\b/i.test(ev.motif || '');
+ const hasOuiInMotif = /\boui\b/i.test(ev.motif || '');
+ const isJustifiedEvent = ev.justified === 'Oui' || hasOuiInMotif;
 
  if (ev.type === 'retenue' || motifStatut === 'Retenue') {
  const hours = getRetenueHours(ev);
- detailText = `<span class="font-semibold text-xs text-purple-800">Durée: ${Number.isInteger(hours) ? hours : hours.toFixed(1)}h</span>`;
+ const formattedHours = Number.isInteger(hours) ? hours : hours.toFixed(1);
+ detailText = `<span class="font-semibold text-xs text-purple-800">Durée: ${formattedHours}h</span>`;
  } else if (motifStatut) {
  let badgeColor = "bg-slate-100 text-slate-800 border-slate-300";
  if (motifStatut === 'Exclusion de cours') badgeColor = "bg-rose-100 text-rose-800 border-rose-300 font-semibold";
  else if (motifStatut === 'emploi du temps bloqué') badgeColor = "bg-amber-100 text-amber-800 border-amber-300 font-semibold";
+ else if (motifStatut === 'Observations') badgeColor = "bg-blue-100 text-blue-800 border-blue-300 font-semibold";
+
  detailText = `<span class="inline-block text-xs px-2.5 py-0.5 rounded-full border ${badgeColor}">${sanitize(motifStatut)}</span>`;
  } else if (ev.type === 'absence' || ev.type === 'retard') {
  detailText = `
@@ -2383,7 +1975,14 @@
  <span class="w-1.5 h-1.5 rounded-full ${isJustifiedEvent ? 'bg-emerald-500' : 'bg-rose-500'}"></span>
  <span>${isJustifiedEvent ? 'Justifié' : 'Non Justifié'}</span>
  <i data-lucide="refresh-cw" class="w-3 h-3 ml-0.5 opacity-60"></i>
- </button>`;
+ </button>
+ `;
+ } else if (ev.type === 'abs_injustifiee' && ev.pronoteType) {
+ detailText = `<span class="font-semibold text-xs text-red-700">${sanitize(ev.pronoteType)}</span>`;
+ } else if (ev.type === 'emploi_bloque') {
+ detailText = `<span class="font-semibold text-xs text-amber-800">emploi du temps bloqué</span>`;
+ } else if (ev.type === 'exclusion') {
+ detailText = `<span class="font-semibold text-xs text-rose-800">Exclusion de cours</span>`;
  }
 
  const eventDateStr = extractDateFromText(ev.motif) || ev.date;
@@ -2392,20 +1991,32 @@
  ? parsedDate.toLocaleString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })
  : sanitize(ev.date || '--');
 
+ const safeMotif = sanitize(ev.motif || '-');
+
  tr.innerHTML = `
  <td class="py-2.5 px-4 font-mono text-[11px] text-slate-600">${sanitize(formattedDate)}</td>
  <td class="py-2.5 px-4"><span class="text-[10px] font-bold px-2 py-0.5 rounded-md ${badgeClass}">${sanitize(typeLabel)}</span></td>
  <td class="py-2.5 px-4 text-xs">${detailText}</td>
- <td class="py-2.5 px-4 text-xs text-slate-600">${sanitize(ev.motif || '-')}</td>
+ <td class="py-2.5 px-4 text-xs text-slate-600">${safeMotif}</td>
  <td class="py-2.5 px-4 text-right no-print">
  <button onclick="deleteEvent('${safeEvId}')" class="text-rose-600 hover:text-rose-800 p-1.5 rounded-lg hover:bg-rose-50 transition">
  <i data-lucide="trash-2" class="w-4 h-4"></i>
  </button>
- </td>`;
+ </td>
+ `;
  tbody.appendChild(tr);
  });
 
  lucide.createIcons();
+ }
+
+ function renderCurrentRecapView() {
+ updateAutoCpeAlerts();
+ if (currentRecapViewMode === 'category') {
+ renderRecapCategoryCards(currentRecapCategory);
+ } else {
+ renderRecapClassCards();
+ }
  }
 
  function setRecapViewMode(mode) {
@@ -2430,14 +2041,12 @@
  function toggleRecapClassSort() {
  recapClassSortOrder = recapClassSortOrder === 'desc' ? 'asc' : 'desc';
  const label = document.getElementById('recapSortLabel');
- if (label) label.textContent = recapClassSortOrder === 'desc' ? "Trier : Du + grand au + petit" : "Trier : Du + petit au + grand";
- renderCurrentRecapView();
+ if (label) {
+ label.textContent = recapClassSortOrder === 'desc' 
+ ? "Trier : Du + grand au + petit" 
+ : "Trier : Du + petit au + grand";
  }
-
- function renderCurrentRecapView() {
- updateAutoCpeAlerts();
- if (currentRecapViewMode === 'category') renderRecapCategoryCards(currentRecapCategory);
- else renderRecapClassCards();
+ renderCurrentRecapView();
  }
 
  function renderRecapCategoryCards(cat) {
@@ -2455,23 +2064,34 @@
  if (cat === 'abs_injustifiee') {
  const isAbs = e.type === 'absence' || (e.pronoteType && e.pronoteType.toLowerCase().includes('absence injustifiée'));
  const hasOui = /\boui\b/i.test(e.motif || '');
- return isAbs && !(e.justified === 'Oui' || hasOui);
+ const isJust = e.justified === 'Oui' || hasOui;
+ return isAbs && !isJust;
  }
  return false;
  };
 
- let filteredStudents = students.filter(s => (selectedClass === 'ALL' || s.classe === selectedClass) && (s.events || []).some(matchesCat));
+ let filteredStudents = students.filter(s => {
+ const matchesClass = selectedClass === 'ALL' || s.classe === selectedClass;
+ return matchesClass && (s.events || []).some(matchesCat);
+ });
+
  filteredStudents.sort((a, b) => {
  const countA = (a.events || []).filter(matchesCat).length;
  const countB = (b.events || []).filter(matchesCat).length;
  return recapClassSortOrder === 'desc' ? countB - countA : countA - countB;
  });
 
- if (filteredStudents.length === 0) { emptyMsg.classList.remove('hidden'); return; }
- else emptyMsg.classList.add('hidden');
+ if (filteredStudents.length === 0) {
+ emptyMsg.classList.remove('hidden');
+ return;
+ } else {
+ emptyMsg.classList.add('hidden');
+ }
 
  filteredStudents.forEach(student => {
  const catEvents = (student.events || []).filter(matchesCat);
+ const isAlerteCpe = !!student.alerteCPE;
+ const isDocNonRendu = !!student.docNonRendu;
  const thresholdInfo = getExceededThresholdsInfo(student);
  const safeId = sanitize(student.id);
 
@@ -2482,21 +2102,81 @@
  const dateStr = extractDateFromText(e.motif) || e.date;
  const parsed = new Date(dateStr);
  const formattedDate = !isNaN(parsed.getTime()) ? parsed.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' }) : '--';
+ 
  let detail = sanitize(e.motif || '');
+ if (e.pronoteType) detail = `[${sanitize(e.pronoteType)}] ${detail}`;
+ 
+ const isJust = e.justified === 'Oui' || /\boui\b/i.test(e.motif || '');
+ if (e.type === 'absence' || e.type === 'retard') detail += ` (${isJust ? 'Justifié' : 'Non justifié'})`;
+ 
+ if (e.type === 'retenue' || getStatutDetailFromMotif(e.motif) === 'Retenue') {
+ const hours = getRetenueHours(e);
+ const formattedHours = Number.isInteger(hours) ? hours : hours.toFixed(1);
+ detail += ` (${formattedHours}h)`;
+ }
+
  return `<li class="text-xs text-slate-600"><span class="font-semibold text-slate-800">${sanitize(formattedDate)}:</span> ${detail}</li>`;
  }).join('');
+
+ const safeNom = sanitize(student.nom ? student.nom.toUpperCase() : '');
+ const safePrenom = sanitize(student.prenom);
+ const safeClasse = sanitize(student.classe);
 
  card.innerHTML = `
  <div>
  <div class="flex items-center justify-between gap-2 border-b border-slate-100 pb-2 cursor-pointer" onclick="openStudentDetail('${safeId}')">
  <div>
- <h4 class="font-bold text-slate-800 text-sm hover:text-indigo-600 transition">${sanitize(student.nom.toUpperCase())} ${sanitize(student.prenom)}</h4>
- <span class="text-xs text-slate-500 font-medium">${sanitize(student.classe)}</span>
+ <div class="flex items-center gap-1.5 flex-wrap">
+ <h4 class="font-bold text-slate-800 text-sm hover:text-indigo-600 transition">${safeNom} ${safePrenom}</h4>
+ ${isAlerteCpe ? `
+ <span class="inline-flex items-center gap-1 bg-rose-600 text-white px-1.5 py-0.5 rounded-full text-[9px] font-extrabold shadow-2xs animate-pulse">
+ <i data-lucide="siren" class="w-2.5 h-2.5"></i> CPE
+ </span>
+ ` : ''}
+ ${isDocNonRendu ? `
+ <span class="inline-flex items-center gap-1 bg-amber-500 text-white px-1.5 py-0.5 rounded-full text-[9px] font-bold shadow-2xs">
+ <i data-lucide="file-warning" class="w-2.5 h-2.5"></i> DOC
+ </span>
+ ` : ''}
  </div>
- <span class="bg-indigo-50 text-indigo-700 text-xs font-extrabold px-2.5 py-0.5 rounded-full border border-indigo-200">${catEvents.length}</span>
+ <span class="text-xs text-slate-500 font-medium">${safeClasse}</span>
  </div>
- <ul class="mt-2 space-y-1 max-h-32 overflow-y-auto pr-1 cursor-pointer" onclick="openStudentDetail('${safeId}')">${listHtml}</ul>
- </div>`;
+ <span class="bg-indigo-50 text-indigo-700 text-xs font-extrabold px-2.5 py-0.5 rounded-full border border-indigo-200">
+ ${catEvents.length}
+ </span>
+ </div>
+
+ ${thresholdInfo.hasExceeded ? `
+ <div class="mt-2 p-2 bg-rose-50/90 border border-rose-200/90 rounded-xl text-[11px] text-rose-900 flex items-start gap-1.5">
+ <i data-lucide="info" class="w-3.5 h-3.5 text-rose-600 shrink-0 mt-0.5"></i>
+ <div class="flex-1 leading-snug">
+ <span class="font-bold text-rose-800 block text-[10px] uppercase tracking-wide">Seuil(s) atteint(s) :</span>
+ <span class="text-[11px] font-semibold text-rose-950">${sanitize(thresholdInfo.summaryText)}</span>
+ </div>
+ </div>
+ ` : ''}
+
+ <div class="grid grid-cols-2 gap-1.5 bg-slate-50 p-1.5 rounded-xl border border-slate-200/70 my-2">
+ <div class="flex items-center justify-between gap-1 px-1">
+ <span class="text-[10px] font-semibold text-rose-800 flex items-center gap-1"><i data-lucide="siren" class="w-3 h-3 text-rose-600"></i> CPE</span>
+ <button onclick="quickToggleCpe('${safeId}', event)" class="relative inline-flex h-4 w-7 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${isAlerteCpe ? 'bg-rose-600' : 'bg-slate-300'}" title="Alerter CPE">
+ <span class="pointer-events-none inline-block h-3 w-3 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${isAlerteCpe ? 'translate-x-3' : 'translate-x-0'}"></span>
+ </button>
+ </div>
+
+ <div class="flex items-center justify-between gap-1 px-1 border-l border-slate-200">
+ <span class="text-[10px] font-semibold text-amber-800 flex items-center gap-1"><i data-lucide="file-warning" class="w-3 h-3 text-amber-600"></i> Doc</span>
+ <button onclick="quickToggleDoc('${safeId}', event)" class="relative inline-flex h-4 w-7 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${isDocNonRendu ? 'bg-amber-500' : 'bg-slate-300'}" title="Document non rendu">
+ <span class="pointer-events-none inline-block h-3 w-3 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${isDocNonRendu ? 'translate-x-3' : 'translate-x-0'}"></span>
+ </button>
+ </div>
+ </div>
+
+ <ul class="mt-2 space-y-1 max-h-32 overflow-y-auto pr-1 cursor-pointer" onclick="openStudentDetail('${safeId}')">
+ ${listHtml}
+ </ul>
+ </div>
+ `;
  container.appendChild(card);
  });
 
@@ -2509,22 +2189,42 @@
  const selectedClass = document.getElementById('recapClassSelect').value;
  container.innerHTML = '';
 
- let filteredStudents = students.filter(s => (selectedClass === 'ALL' || s.classe === selectedClass) && (s.events || []).length > 0);
+ let filteredStudents = students.filter(s => {
+ const matchesClass = selectedClass === 'ALL' || s.classe === selectedClass;
+ return matchesClass && (s.events || []).length > 0;
+ });
+
  filteredStudents.sort((a, b) => {
  const countA = (a.events || []).length;
  const countB = (b.events || []).length;
  return recapClassSortOrder === 'desc' ? countB - countA : countA - countB;
  });
 
- if (filteredStudents.length === 0) { emptyMsg.classList.remove('hidden'); return; }
- else emptyMsg.classList.add('hidden');
+ if (filteredStudents.length === 0) {
+ emptyMsg.classList.remove('hidden');
+ return;
+ } else {
+ emptyMsg.classList.add('hidden');
+ }
 
  filteredStudents.forEach(student => {
  const events = student.events || [];
  const retards = events.filter(e => e.type === 'retard').length;
  const absences = events.filter(e => e.type === 'absence').length;
  const retenues = events.filter(e => e.type === 'retenue' || getStatutDetailFromMotif(e.motif) === 'Retenue').reduce((sum, e) => sum + getRetenueHours(e), 0);
+ const emploiBloque = events.filter(e => e.type === 'emploi_bloque' || getStatutDetailFromMotif(e.motif) === 'emploi du temps bloqué').length;
+ const exclusions = events.filter(e => e.type === 'exclusion' || getStatutDetailFromMotif(e.motif) === 'Exclusion de cours').length;
+ const absInjustifiees = countUnjustifiedAbsences(student);
+
+ const isAlerteCpe = !!student.alerteCPE;
+ const isDocNonRendu = !!student.docNonRendu;
+ const thresholdInfo = getExceededThresholdsInfo(student);
  const safeId = sanitize(student.id);
+
+ const safeNom = sanitize(student.nom ? student.nom.toUpperCase() : '');
+ const safePrenom = sanitize(student.prenom);
+ const safeClasse = sanitize(student.classe);
+ const formattedRetenues = Number.isInteger(retenues) ? retenues : retenues.toFixed(1);
 
  const card = document.createElement('div');
  card.className = "bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/90 shadow-2xs hover:shadow-md transition flex flex-col justify-between";
@@ -2533,33 +2233,115 @@
  <div>
  <div class="flex items-center justify-between gap-2 border-b border-slate-100 pb-2 cursor-pointer" onclick="openStudentDetail('${safeId}')">
  <div>
- <h4 class="font-bold text-slate-800 text-sm hover:text-indigo-600 transition">${sanitize(student.nom.toUpperCase())} ${sanitize(student.prenom)}</h4>
- <span class="text-xs text-slate-500 font-medium">${sanitize(student.classe)}</span>
+ <div class="flex items-center gap-1.5 flex-wrap">
+ <h4 class="font-bold text-slate-800 text-sm hover:text-indigo-600 transition">${safeNom} ${safePrenom}</h4>
+ ${isAlerteCpe ? `
+ <span class="inline-flex items-center gap-1 bg-rose-600 text-white px-1.5 py-0.5 rounded-full text-[9px] font-extrabold shadow-2xs animate-pulse">
+ <i data-lucide="siren" class="w-2.5 h-2.5"></i> CPE
+ </span>
+ ` : ''}
+ ${isDocNonRendu ? `
+ <span class="inline-flex items-center gap-1 bg-amber-500 text-white px-1.5 py-0.5 rounded-full text-[9px] font-bold shadow-2xs">
+ <i data-lucide="file-warning" class="w-2.5 h-2.5"></i> DOC
+ </span>
+ ` : ''}
  </div>
- <span class="bg-indigo-50 text-indigo-700 text-xs font-extrabold px-2.5 py-0.5 rounded-full border border-indigo-200">${events.length} evt(s)</span>
+ <span class="text-xs text-slate-500 font-medium">${safeClasse}</span>
  </div>
- <div class="mt-2 cursor-pointer grid grid-cols-3 gap-2 text-center text-xs" onclick="openStudentDetail('${safeId}')">
- <div class="bg-amber-50 p-2 rounded-xl border border-amber-200/80"><span class="block text-[10px] text-amber-800 font-semibold">Retards</span><span class="font-extrabold text-amber-700 text-sm">${retards}</span></div>
- <div class="bg-rose-50 p-2 rounded-xl border border-rose-200/80"><span class="block text-[10px] text-rose-800 font-semibold">Absences</span><span class="font-extrabold text-rose-700 text-sm">${absences}</span></div>
- <div class="bg-purple-50 p-2 rounded-xl border border-purple-200/80"><span class="block text-[10px] text-purple-800 font-semibold">Retenues</span><span class="font-extrabold text-purple-700 text-sm">${Number.isInteger(retenues) ? retenues : retenues.toFixed(1)}h</span></div>
+ <span class="bg-indigo-50 text-indigo-700 text-xs font-extrabold px-2.5 py-0.5 rounded-full border border-indigo-200" title="Total d'événements">
+ ${events.length} evt(s)
+ </span>
  </div>
- </div>`;
+
+ ${thresholdInfo.hasExceeded ? `
+ <div class="mt-2 p-2 bg-rose-50/90 border border-rose-200/90 rounded-xl text-[11px] text-rose-900 flex items-start gap-1.5">
+ <i data-lucide="info" class="w-3.5 h-3.5 text-rose-600 shrink-0 mt-0.5"></i>
+ <div class="flex-1 leading-snug">
+ <span class="font-bold text-rose-800 block text-[10px] uppercase tracking-wide">Seuil(s) atteint(s) :</span>
+ <span class="text-[11px] font-semibold text-rose-950">${sanitize(thresholdInfo.summaryText)}</span>
+ </div>
+ </div>
+ ` : ''}
+
+ <div class="grid grid-cols-2 gap-1.5 bg-slate-50 p-1.5 rounded-xl border border-slate-200/70 my-2">
+ <div class="flex items-center justify-between gap-1 px-1">
+ <span class="text-[10px] font-semibold text-rose-800 flex items-center gap-1"><i data-lucide="siren" class="w-3 h-3 text-rose-600"></i> CPE</span>
+ <button onclick="quickToggleCpe('${safeId}', event)" class="relative inline-flex h-4 w-7 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${isAlerteCpe ? 'bg-rose-600' : 'bg-slate-300'}" title="Alerter CPE">
+ <span class="pointer-events-none inline-block h-3 w-3 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${isAlerteCpe ? 'translate-x-3' : 'translate-x-0'}"></span>
+ </button>
+ </div>
+
+ <div class="flex items-center justify-between gap-1 px-1 border-l border-slate-200">
+ <span class="text-[10px] font-semibold text-amber-800 flex items-center gap-1"><i data-lucide="file-warning" class="w-3 h-3 text-amber-600"></i> Doc</span>
+ <button onclick="quickToggleDoc('${safeId}', event)" class="relative inline-flex h-4 w-7 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${isDocNonRendu ? 'bg-amber-500' : 'bg-slate-300'}" title="Document non rendu">
+ <span class="pointer-events-none inline-block h-3 w-3 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${isDocNonRendu ? 'translate-x-3' : 'translate-x-0'}"></span>
+ </button>
+ </div>
+ </div>
+
+ <div class="mt-2 cursor-pointer" onclick="openStudentDetail('${safeId}')">
+ <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Synthèse des Compteurs</p>
+ <div class="grid grid-cols-3 gap-2 text-center text-xs">
+ <div class="bg-amber-50 p-2 rounded-xl border border-amber-200/80">
+ <span class="block text-[10px] text-amber-800 font-semibold">Retards</span>
+ <span class="font-extrabold text-amber-700 text-sm">${retards}</span>
+ </div>
+ <div class="bg-rose-50 p-2 rounded-xl border border-rose-200/80">
+ <span class="block text-[10px] text-rose-800 font-semibold">Absences</span>
+ <span class="font-extrabold text-rose-700 text-sm">${absences}</span>
+ </div>
+ <div class="bg-purple-50 p-2 rounded-xl border border-purple-200/80">
+ <span class="block text-[10px] text-purple-800 font-semibold">Retenues</span>
+ <span class="font-extrabold text-purple-700 text-sm">${formattedRetenues}h</span>
+ </div>
+ <div class="bg-amber-50/70 p-2 rounded-xl border border-amber-200/60">
+ <span class="block text-[10px] text-amber-900 font-semibold">EDT Bloqué</span>
+ <span class="font-extrabold text-amber-800 text-sm">${emploiBloque}</span>
+ </div>
+ <div class="bg-rose-50/70 p-2 rounded-xl border border-rose-200/60">
+ <span class="block text-[10px] text-rose-900 font-semibold">Exclusions</span>
+ <span class="font-extrabold text-rose-700 text-sm">${exclusions}</span>
+ </div>
+ <div class="bg-red-50 p-2 rounded-xl border border-red-200/80">
+ <span class="block text-[10px] text-red-800 font-semibold">Abs. Injustifiées</span>
+ <span class="font-extrabold text-red-700 text-sm">${absInjustifiees}</span>
+ </div>
+ </div>
+ </div>
+ </div>
+ `;
  container.appendChild(card);
  });
 
  lucide.createIcons();
  }
 
+ // =========================================================
+ // 7. EVENT HANDLERS & NAVIGATION
+ // =========================================================
  function setQuickFilter(type) {
  currentQuickFilter = type;
- ['all', 'cpe', 'doc', 'canteen', 'no-exit'].forEach(t => {
- const btn = document.getElementById(`btnFilter${t === 'no-exit' ? 'NoExit' : t.toUpperCase()}`);
- if (btn) {
- btn.className = type === t 
+ 
+ document.getElementById('btnFilterAll').className = type === 'all' 
  ? "px-3 py-1.5 rounded-xl text-xs font-semibold bg-indigo-600 text-white shadow-2xs flex items-center gap-1.5 transition" 
  : "px-3 py-1.5 rounded-xl text-xs font-medium bg-slate-100 text-slate-600 border border-slate-200 hover:bg-slate-200 flex items-center gap-1.5 transition";
- }
- });
+
+ document.getElementById('btnFilterCPE').className = type === 'cpe' 
+ ? "px-3 py-1.5 rounded-xl text-xs font-semibold bg-rose-600 text-white shadow-2xs flex items-center gap-1.5 transition" 
+ : "px-3 py-1.5 rounded-xl text-xs font-medium bg-slate-100 text-slate-600 border border-slate-200 hover:bg-rose-50 hover:text-rose-700 flex items-center gap-1.5 transition";
+
+ document.getElementById('btnFilterDoc').className = type === 'doc' 
+ ? "px-3 py-1.5 rounded-xl text-xs font-semibold bg-amber-500 text-white shadow-2xs flex items-center gap-1.5 transition" 
+ : "px-3 py-1.5 rounded-xl text-xs font-medium bg-slate-100 text-slate-600 border border-slate-200 hover:bg-amber-50 hover:text-amber-700 flex items-center gap-1.5 transition";
+
+ document.getElementById('btnFilterCanteen').className = type === 'canteen' 
+ ? "px-3 py-1.5 rounded-xl text-xs font-semibold bg-emerald-600 text-white shadow-2xs flex items-center gap-1.5 transition" 
+ : "px-3 py-1.5 rounded-xl text-xs font-medium bg-slate-100 text-slate-600 border border-slate-200 hover:bg-emerald-50 hover:text-emerald-700 flex items-center gap-1.5 transition";
+
+ document.getElementById('btnFilterNoExit').className = type === 'no-exit' 
+ ? "px-3 py-1.5 rounded-xl text-xs font-semibold bg-rose-600 text-white shadow-2xs flex items-center gap-1.5 transition" 
+ : "px-3 py-1.5 rounded-xl text-xs font-medium bg-slate-100 text-slate-600 border border-slate-200 hover:bg-rose-50 hover:text-rose-700 flex items-center gap-1.5 transition";
+
  filterStudents();
  }
 
@@ -2578,10 +2360,15 @@
  const matchesClass = selectedClass === "" || student.classe === selectedClass;
 
  let matchesQuick = true;
- if (currentQuickFilter === 'cpe') matchesQuick = !!student.alerteCPE;
- else if (currentQuickFilter === 'doc') matchesQuick = !!student.docNonRendu;
- else if (currentQuickFilter === 'canteen') matchesQuick = student.regime === 'Demi-pensionnaire';
- else if (currentQuickFilter === 'no-exit') matchesQuick = student.autorisationSortie === 'Non';
+ if (currentQuickFilter === 'cpe') {
+ matchesQuick = !!student.alerteCPE;
+ } else if (currentQuickFilter === 'doc') {
+ matchesQuick = !!student.docNonRendu;
+ } else if (currentQuickFilter === 'canteen') {
+ matchesQuick = student.regime === 'Demi-pensionnaire';
+ } else if (currentQuickFilter === 'no-exit') {
+ matchesQuick = student.autorisationSortie === 'Non';
+ }
 
  return matchesSearch && matchesClass && matchesQuick;
  });
@@ -2591,17 +2378,29 @@
 
  function updateStudentRepereFromGrid(studentId, badgeValue) {
  const student = students.find(s => s.id === studentId);
- if (student) { student.badgeRepere = badgeValue.trim(); saveStorage(); }
+ if (student) {
+ student.badgeRepere = badgeValue.trim();
+ saveStorage();
+ }
  }
 
  function requestToggleCanteen(studentId, event) {
  if (event) event.stopPropagation();
  const student = students.find(s => s.id === studentId);
  if (!student) return;
- const newStatus = student.regime === 'Demi-pensionnaire' ? 'Externe' : 'Demi-pensionnaire';
+
+ const isCurrentlyDP = student.regime === 'Demi-pensionnaire';
+ const newStatus = isCurrentlyDP ? 'Externe' : 'Demi-pensionnaire';
+
  document.getElementById('toggleModalTitle').textContent = "Modifier statut cantine";
  document.getElementById('toggleModalMessage').textContent = `Passer ${student.nom} ${student.prenom} en : ${newStatus} ?`;
- pendingToggleAction = () => { student.regime = newStatus; saveStorage(); filterStudents(); };
+ 
+ pendingToggleAction = () => {
+ student.regime = newStatus;
+ saveStorage();
+ filterStudents();
+ };
+
  document.getElementById('confirmToggleModal').classList.remove('hidden');
  }
 
@@ -2609,36 +2408,169 @@
  if (event) event.stopPropagation();
  const student = students.find(s => s.id === studentId);
  if (!student) return;
+
  const newExit = student.autorisationSortie === 'Oui' ? 'Non' : 'Oui';
+
  document.getElementById('toggleModalTitle').textContent = "Autorisation de sortie";
  document.getElementById('toggleModalMessage').textContent = `Changer le droit de sortie pour ${student.nom} ${student.prenom} vers : ${newExit === 'Oui' ? 'AUTORISÉ' : 'INTERDIT'} ?`;
- pendingToggleAction = () => { student.autorisationSortie = newExit; saveStorage(); filterStudents(); };
+
+ pendingToggleAction = () => {
+ student.autorisationSortie = newExit;
+ saveStorage();
+ filterStudents();
+ };
+
  document.getElementById('confirmToggleModal').classList.remove('hidden');
  }
 
  function executePendingToggle() {
- if (pendingToggleAction) { pendingToggleAction(); pendingToggleAction = null; }
+ if (pendingToggleAction) {
+ pendingToggleAction();
+ pendingToggleAction = null;
+ }
  closeModal('confirmToggleModal');
+ }
+
+ function showListPage() {
+ stopBadgeScanner();
+ hideSearchDropdown();
+ document.getElementById('pageDetail').classList.add('hidden');
+ document.getElementById('pageRecap').classList.add('hidden');
+ document.getElementById('pageList').classList.remove('hidden');
+ selectedStudentId = null;
+ filterStudents();
+ window.scrollTo({ top: lastScrollPosition, behavior: 'instant' });
+ }
+
+ function openStudentDetail(id) {
+ stopBadgeScanner();
+ hideSearchDropdown();
+ lastScrollPosition = window.scrollY || document.documentElement.scrollTop || 0;
+ selectedStudentId = id;
+ showOnlyUnjustifiedAbsences = false;
+ currentHistoryFilter = 'all';
+ updateUnjustifiedBtnStyle();
+ setHistoryTab('all');
+
+ const student = students.find(s => s.id === id);
+ if (!student) return;
+
+ document.getElementById('detailName').textContent = `${(student.nom || '').toUpperCase()} ${student.prenom || ''}`;
+ 
+ const initP = student.prenom && student.prenom.length > 0 ? student.prenom[0] : '-';
+ const initN = student.nom && student.nom.length > 0 ? student.nom[0] : '-';
+ document.getElementById('detailInitials').textContent = `${initP}${initN}`;
+ 
+ const detailClassEl = document.getElementById('detailClass');
+ detailClassEl.textContent = student.classe || '';
+ detailClassEl.className = `text-xs px-2.5 py-0.5 rounded-full border font-bold text-white ${getClassBadgeColorClass(student.classe)}`;
+
+ document.getElementById('detailRegime').textContent = student.regime || '';
+ document.getElementById('detailProf').textContent = student.profPrincipal || 'Non renseigné';
+
+ updateDetailCardBadgesAndToggles(student);
+
+ const canteenIndicator = document.getElementById('detailCanteenIndicator');
+ const qrBox = document.getElementById('detailCanteenQRBox');
+ 
+ if (student.regime === 'Demi-pensionnaire') {
+ canteenIndicator.classList.remove('hidden');
+ canteenIndicator.classList.add('flex');
+ qrBox.classList.remove('hidden');
+ qrBox.classList.add('flex');
+
+ document.getElementById('canteenBadgeInput').value = student.badgeCantine || '';
+ generateCanteenQRCode(student.badgeCantine || student.id);
+ } else {
+ canteenIndicator.classList.add('hidden');
+ canteenIndicator.classList.remove('flex');
+ qrBox.classList.add('hidden');
+ qrBox.classList.remove('flex');
+ }
+
+ const exitBadge = document.getElementById('detailExitBadge');
+ if (student.autorisationSortie === 'Oui') {
+ exitBadge.textContent = "Autorisation de sortie: OUI";
+ exitBadge.className = "text-xs px-2.5 py-0.5 rounded-full border bg-emerald-500/20 text-emerald-200 border-emerald-400/30 font-medium";
+ } else {
+ exitBadge.textContent = "INTERDIT DE SORTIE";
+ exitBadge.className = "text-xs px-2.5 py-0.5 rounded-full border bg-rose-500/30 text-rose-200 border-rose-400/40 font-bold animate-pulse";
+ }
+
+ updateCounters(student);
+ renderHistoryTable(student);
+
+ document.getElementById('pageList').classList.add('hidden');
+ document.getElementById('pageRecap').classList.add('hidden');
+ document.getElementById('pageDetail').classList.remove('hidden');
+
+ window.scrollTo(0, 0);
+ lucide.createIcons();
  }
 
  function updateDetailCardBadgesAndToggles(student) {
  const cpeBadge = document.getElementById('detailCpeBadge');
  const docBadge = document.getElementById('detailDocBadge');
 
- cpeBadge.classList.toggle('hidden', !student.alerteCPE);
- cpeBadge.classList.toggle('flex', !!student.alerteCPE);
- docBadge.classList.toggle('hidden', !student.docNonRendu);
- docBadge.classList.toggle('flex', !!student.docNonRendu);
+ if (student.alerteCPE) {
+ cpeBadge.classList.remove('hidden');
+ cpeBadge.classList.add('flex');
+ } else {
+ cpeBadge.classList.add('hidden');
+ cpeBadge.classList.remove('flex');
+ }
+
+ if (student.docNonRendu) {
+ docBadge.classList.remove('hidden');
+ docBadge.classList.add('flex');
+ } else {
+ docBadge.classList.add('hidden');
+ docBadge.classList.remove('flex');
+ }
 
  const thresholdBox = document.getElementById('detailThresholdBox');
  const thresholdText = document.getElementById('detailThresholdText');
  const info = getExceededThresholdsInfo(student);
 
  if (info.hasExceeded && thresholdBox && thresholdText) {
- thresholdBox.classList.remove('hidden'); thresholdBox.classList.add('flex');
+ thresholdBox.classList.remove('hidden');
+ thresholdBox.classList.add('flex');
  thresholdText.textContent = info.summaryText;
  } else if (thresholdBox) {
- thresholdBox.classList.add('hidden'); thresholdBox.classList.remove('flex');
+ thresholdBox.classList.add('hidden');
+ thresholdBox.classList.remove('flex');
+ }
+
+ const btnCpe = document.getElementById('detailToggleCpeBtn');
+ const dotCpe = document.getElementById('detailToggleCpeDot');
+ const labelCpe = document.getElementById('detailCpeStatusLabel');
+
+ if (student.alerteCPE) {
+ btnCpe.className = "relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none bg-rose-600";
+ dotCpe.className = "pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-5";
+ labelCpe.textContent = "ACTIVÉE (ROUGE)";
+ labelCpe.className = "text-xs font-bold text-rose-600";
+ } else {
+ btnCpe.className = "relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none bg-slate-300";
+ dotCpe.className = "pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0";
+ labelCpe.textContent = "Désactivée";
+ labelCpe.className = "text-xs font-semibold text-slate-500";
+ }
+
+ const btnDoc = document.getElementById('detailToggleDocBtn');
+ const dotDoc = document.getElementById('detailToggleDocDot');
+ const labelDoc = document.getElementById('detailDocStatusLabel');
+
+ if (student.docNonRendu) {
+ btnDoc.className = "relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none bg-amber-500";
+ dotDoc.className = "pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-5";
+ labelDoc.textContent = "OUI (ORANGE)";
+ labelDoc.className = "text-xs font-bold text-amber-600";
+ } else {
+ btnDoc.className = "relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none bg-slate-300";
+ dotDoc.className = "pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0";
+ labelDoc.textContent = "Non";
+ labelDoc.className = "text-xs font-semibold text-slate-500";
  }
  }
 
@@ -2649,6 +2581,7 @@
  student.alerteCPE = !student.alerteCPE;
  saveStorage();
  updateDetailCardBadgesAndToggles(student);
+ lucide.createIcons();
  }
 
  function toggleDetailDocNonRendu() {
@@ -2658,14 +2591,21 @@
  student.docNonRendu = !student.docNonRendu;
  saveStorage();
  updateDetailCardBadgesAndToggles(student);
+ lucide.createIcons();
  }
 
  function generateCanteenQRCode(val) {
  const container = document.getElementById('qrcodeCanvas');
  container.innerHTML = '';
+ const qrContent = val && val.trim() ? val.trim() : 'SANS-BADGE';
+
  qrCodeObj = new QRCode(container, {
- text: val && val.trim() ? val.trim() : 'SANS-BADGE',
- width: 90, height: 90, colorDark : "#0f172a", colorLight : "#ffffff", correctLevel : QRCode.CorrectLevel.H
+ text: qrContent,
+ width: 90,
+ height: 90,
+ colorDark : "#0f172a",
+ colorLight : "#ffffff",
+ correctLevel : QRCode.CorrectLevel.H
  });
  }
 
@@ -2680,21 +2620,41 @@
  }
 
  function startBadgeScanner() {
- document.getElementById('scannerReaderContainer').classList.remove('hidden');
+ const container = document.getElementById('scannerReaderContainer');
+ container.classList.remove('hidden');
+
  if (html5QrCodeScanner) stopBadgeScanner();
+
  html5QrCodeScanner = new Html5Qrcode("badgeQrReader");
- html5QrCodeScanner.start({ facingMode: "environment" }, { fps: 10, qrbox: 180 }, (decodedText) => {
- document.getElementById('canteenBadgeInput').value = decodedText;
+ const config = { fps: 10, qrbox: { width: 180, height: 180 } };
+
+ html5QrCodeScanner.start(
+ { facingMode: "environment" },
+ config,
+ (decodedText) => {
+ const input = document.getElementById('canteenBadgeInput');
+ input.value = decodedText;
  updateCanteenBadgeNumber(decodedText);
  stopBadgeScanner();
- }).catch(err => alert("Erreur caméra : " + err));
+ },
+ (errorMessage) => {}
+ ).catch(err => {
+ alert("Impossible d'accéder à la caméra : " + err);
+ stopBadgeScanner();
+ });
  }
 
  function stopBadgeScanner() {
  const container = document.getElementById('scannerReaderContainer');
  if (container) container.classList.add('hidden');
+
  if (html5QrCodeScanner) {
- html5QrCodeScanner.stop().then(() => { html5QrCodeScanner.clear(); html5QrCodeScanner = null; }).catch(() => { html5QrCodeScanner = null; });
+ html5QrCodeScanner.stop().then(() => {
+ html5QrCodeScanner.clear();
+ html5QrCodeScanner = null;
+ }).catch(err => {
+ html5QrCodeScanner = null;
+ });
  }
  }
 
@@ -2707,18 +2667,122 @@
  const exclusions = events.filter(e => e.type === 'exclusion' || getStatutDetailFromMotif(e.motif) === 'Exclusion de cours').length;
  const absInjustifiees = countUnjustifiedAbsences(student);
 
+ const formattedRetenues = Number.isInteger(retenues) ? retenues : retenues.toFixed(1);
+
  document.getElementById('countRetards').textContent = retards;
  document.getElementById('countAbsences').textContent = absences;
- document.getElementById('countRetenues').textContent = `${Number.isInteger(retenues) ? retenues : retenues.toFixed(1)} h`;
+ document.getElementById('countRetenues').textContent = `${formattedRetenues} h`;
  document.getElementById('countEmploiBloque').textContent = emploiBloque;
  document.getElementById('countExclusion').textContent = exclusions;
  document.getElementById('countAbsInjustifiees').textContent = absInjustifiees;
  }
 
+ function openAddEventModal(type) {
+ if (!selectedStudentId) return;
+ 
+ document.getElementById('eventTypeInput').value = type;
+ let title = type.toUpperCase();
+ if (type === 'emploi_bloque') title = "EMPLOI DU TEMPS BLOQUÉ";
+ if (type === 'exclusion') title = "EXCLUSION DE COURS";
+ if (type === 'abs_injustifiee') title = "ABSENCE INJUSTIFIÉE";
+ document.getElementById('eventModalTitle').textContent = `Ajouter : ${title}`;
+ 
+ const now = new Date();
+ now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+ document.getElementById('eventDateInput').value = now.toISOString().slice(0, 16);
+
+ document.getElementById('justifiedField').classList.toggle('hidden', type !== 'absence' && type !== 'retard');
+ document.getElementById('durationField').classList.toggle('hidden', type !== 'retenue');
+ document.getElementById('pronotePunitionTypeField').classList.toggle('hidden', type !== 'abs_injustifiee');
+ document.getElementById('eventMotifInput').value = '';
+
+ document.getElementById('eventModal').classList.remove('hidden');
+ }
+
+ function handleSaveEvent(e) {
+ e.preventDefault();
+ if (!selectedStudentId) return;
+
+ const student = students.find(s => s.id === selectedStudentId);
+ if (!student) return;
+
+ const type = document.getElementById('eventTypeInput').value;
+ const motif = document.getElementById('eventMotifInput').value.trim();
+ const date = extractDateFromText(motif) || document.getElementById('eventDateInput').value;
+
+ const newEv = {
+ id: generateUUID(),
+ type,
+ date,
+ motif
+ };
+
+ if (type === 'absence' || type === 'retard') {
+ const justifiedSelect = document.getElementById('eventJustifiedInput').value;
+ const hasOui = /\boui\b/i.test(motif);
+ newEv.justified = (justifiedSelect === 'Oui' || hasOui) ? 'Oui' : 'Non';
+ }
+ 
+ if (type === 'retenue') {
+ newEv.duration = parseInt(document.getElementById('eventDurationInput').value) || getRetenueHours(newEv);
+ }
+ if (type === 'abs_injustifiee') newEv.pronoteType = document.getElementById('eventPronoteTypeInput').value;
+
+ if (!student.events) student.events = [];
+ student.events.push(newEv);
+
+ saveStorage();
+ closeModal('eventModal');
+
+ updateCounters(student);
+ renderHistoryTable(student);
+ }
+
+ function deleteEvent(eventId) {
+ if (!selectedStudentId) return;
+ const student = students.find(s => s.id === selectedStudentId);
+ if (!student) return;
+
+ student.events = (student.events || []).filter(e => e.id !== eventId);
+ saveStorage();
+
+ updateCounters(student);
+ renderHistoryTable(student);
+ }
+
+ // =========================================================
+ // 8. RÉCAPITULATIF
+ // =========================================================
+ function showRecapPage() {
+ stopBadgeScanner();
+ hideSearchDropdown();
+ document.getElementById('pageList').classList.add('hidden');
+ document.getElementById('pageDetail').classList.add('hidden');
+ document.getElementById('pageRecap').classList.remove('hidden');
+
+ populateClassFilter();
+ updateRecapBadges();
+ setRecapViewMode(currentRecapViewMode);
+ }
+
  function updateRecapBadges() {
  updateAutoCpeAlerts();
- ['retard', 'absence', 'retenue', 'emploi_bloque', 'exclusion', 'abs_injustifiee', 'carnet'].forEach(cat => {
- const count = students.filter(s => (s.events || []).some(e => e.type === cat)).length;
+ const categories = ['retard', 'absence', 'retenue', 'emploi_bloque', 'exclusion', 'abs_injustifiee', 'carnet'];
+ categories.forEach(cat => {
+ const count = students.filter(s => (s.events || []).some(e => {
+ if (e.type === cat) return true;
+ const motifStatut = getStatutDetailFromMotif(e.motif);
+ if (cat === 'emploi_bloque' && motifStatut === 'emploi du temps bloqué') return true;
+ if (cat === 'exclusion' && motifStatut === 'Exclusion de cours') return true;
+ if (cat === 'retenue' && motifStatut === 'Retenue') return true;
+ if (cat === 'abs_injustifiee') {
+ const isAbs = e.type === 'absence' || (e.pronoteType && e.pronoteType.toLowerCase().includes('absence injustifiée'));
+ const hasOui = /\boui\b/i.test(e.motif || '');
+ const isJust = e.justified === 'Oui' || hasOui;
+ return isAbs && !isJust;
+ }
+ return false;
+ })).length;
  const badge = document.getElementById(`badge-${cat}`);
  if (badge) badge.textContent = count;
  });
@@ -2727,17 +2791,29 @@
  function switchRecapTab(cat) {
  currentRecapCategory = cat;
  const tabs = document.querySelectorAll('.recap-tab');
- tabs.forEach(t => t.className = "recap-tab shrink-0 px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition text-slate-600 hover:bg-slate-100");
+ tabs.forEach(t => {
+ t.className = "recap-tab shrink-0 px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition text-slate-600 hover:bg-slate-100";
+ });
+
  const activeTab = document.getElementById(`tab-${cat}`);
- if (activeTab) activeTab.className = "recap-tab shrink-0 px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition bg-indigo-600 text-white shadow-2xs";
+ if (activeTab) {
+ activeTab.className = "recap-tab shrink-0 px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition bg-indigo-600 text-white shadow-2xs";
+ }
+
  renderRecapCategoryCards(cat);
  }
 
  // =========================================================
- // 7. IMPORTATION & PARSING (VIE SCOLAIRE)
+ // 9. IMPORTATION & PARSING
  // =========================================================
- function triggerAbsenceImport() { document.getElementById('confirmImportPronoteModal').classList.remove('hidden'); }
- function confirmAndTriggerAbsenceImport() { closeModal('confirmImportPronoteModal'); document.getElementById('absenceFileInput').click(); }
+ function triggerAbsenceImport() {
+ document.getElementById('confirmImportPronoteModal').classList.remove('hidden');
+ }
+
+ function confirmAndTriggerAbsenceImport() {
+ closeModal('confirmImportPronoteModal');
+ document.getElementById('absenceFileInput').click();
+ }
 
  async function importAbsenceDataFile(e) {
  const file = e.target.files[0];
@@ -2748,49 +2824,92 @@
  if (name.endsWith('.pdf')) {
  const reader = new FileReader();
  reader.onload = async function() {
- const pdf = await pdfjsLib.getDocument(new Uint8Array(this.result)).promise;
+ const typedarray = new Uint8Array(this.result);
+ const pdf = await pdfjsLib.getDocument(typedarray).promise;
  let fullText = '';
  for (let i = 1; i <= pdf.numPages; i++) {
  const page = await pdf.getPage(i);
  const textContent = await page.getTextContent();
- fullText += textContent.items.map(item => item.str).join(' ') + '\n';
+ const pageText = textContent.items.map(item => item.str).join(' ');
+ fullText += pageText + '\n';
  }
+ parsePronoteText(fullText);
+ };
+ reader.readAsArrayBuffer(file);
+ } else if (name.endsWith('.xlsx') || name.endsWith('.xls')) {
+ const reader = new FileReader();
+ reader.onload = function(e) {
+ const data = new Uint8Array(e.target.result);
+ const workbook = XLSX.read(data, { type: 'array' });
+ let fullText = '';
+ workbook.SheetNames.forEach(name => {
+ const sheet = workbook.Sheets[name];
+ fullText += XLSX.utils.sheet_to_csv(sheet) + '\n';
+ });
  parsePronoteText(fullText);
  };
  reader.readAsArrayBuffer(file);
  } else {
  const reader = new FileReader();
- reader.onload = (evt) => parsePronoteText(evt.target.result);
+ reader.onload = function(e) {
+ parsePronoteText(e.target.result);
+ };
  reader.readAsText(file, 'UTF-8');
  }
- } catch (err) { alert("Erreur d'importation: " + err.message); }
+ } catch (err) {
+ alert("Erreur lors de la lecture du fichier : " + err.message);
+ }
  e.target.value = '';
  }
 
  function parsePronoteText(text) {
  if (!text) return;
  students.forEach(s => s.events = []);
+
  const lines = text.split(/\r?\n/);
  let importedCount = 0;
 
  lines.forEach(line => {
  if (!line.trim()) return;
+
  students.forEach(student => {
  const nom = (student.nom || '').trim().toUpperCase();
  const prenom = (student.prenom || '').trim().toLowerCase();
- if (nom.length > 1 && line.toUpperCase().includes(nom) && prenom.length > 1 && line.toLowerCase().includes(prenom)) {
- let eventType = null;
+ const lineUpper = line.toUpperCase();
+
+ if (nom.length > 1 && lineUpper.includes(nom)) {
  const lineLower = line.toLowerCase();
+ if (prenom.length > 1 && lineLower.includes(prenom)) {
+ let eventType = null;
  if (lineLower.includes('retard')) eventType = 'retard';
  else if (lineLower.includes('absence')) eventType = 'absence';
- else if (lineLower.includes('retenue')) eventType = 'retenue';
+ else if (lineLower.includes('retenue') || lineLower.includes('colle')) eventType = 'retenue';
+ else if (lineLower.includes('emploi du temps bloqu') || lineLower.includes('edt bloqu')) eventType = 'emploi_bloque';
  else if (lineLower.includes('exclusion')) eventType = 'exclusion';
+ else if (lineLower.includes('absence injustifiée') || lineLower.includes('absence injustifiee')) eventType = 'abs_injustifiee';
+ else if (lineLower.includes('carnet')) eventType = 'carnet';
 
  if (eventType) {
- const newEv = { id: generateUUID(), type: eventType, date: extractDateFromText(line) || new Date().toISOString(), motif: line.trim() };
+ const detectedDate = extractDateFromText(line) || new Date().toISOString();
+ const newEv = {
+ id: generateUUID(),
+ type: eventType,
+ date: detectedDate,
+ motif: line.trim()
+ };
+
+ if (eventType === 'absence' || eventType === 'retard') {
+ newEv.justified = /\boui\b/i.test(line) ? 'Oui' : 'Non';
+ }
+
+ if (eventType === 'retenue') {
+ newEv.duration = getRetenueHours(newEv);
+ }
+
  if (!student.events) student.events = [];
  student.events.push(newEv);
  importedCount++;
+ }
  }
  }
  });
@@ -2799,372 +2918,853 @@
  saveStorage();
  populateClassFilter();
  filterStudents();
- alert(`Import PRONOTE terminé : ${importedCount} événement(s) ajouté(s).`);
+ alert(`Importation PRONOTE terminée : ${importedCount} événement(s) associé(s) aux élèves.`);
  }
 
- function triggerFileImport() { document.getElementById('fileInput').click(); }
+ function triggerFileImport() {
+ document.getElementById('fileInput').click();
+ }
+
  function importDataFile(e) {
  const file = e.target.files[0];
  if (!file) return;
+
+ const name = file.name.toLowerCase();
  const reader = new FileReader();
- reader.onload = function(evt) {
- const workbook = XLSX.read(new Uint8Array(evt.target.result), { type: 'array' });
- const rows = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]]);
+
+ if (name.endsWith('.xlsx') || name.endsWith('.xls')) {
+ reader.onload = function(e) {
+ const data = new Uint8Array(e.target.result);
+ const workbook = XLSX.read(data, { type: 'array' });
+ const sheetName = workbook.SheetNames[0];
+ const rows = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
  processImportedStudents(rows);
  };
  reader.readAsArrayBuffer(file);
+ } else {
+ reader.onload = function(e) {
+ const lines = e.target.result.split('\n');
+ const rows = lines.map(l => {
+ const parts = l.split(/;|\t|,/);
+ return { Nom: parts[0], Prenom: parts[1], Classe: parts[2] };
+ });
+ processImportedStudents(rows);
+ };
+ reader.readAsText(file, 'UTF-8');
+ }
  e.target.value = '';
  }
 
  function processImportedStudents(rows) {
  let count = 0;
  rows.forEach(r => {
- const nom = r.Nom || r.nom;
- const prenom = r.Prenom || r.prenom;
+ const nom = r.Nom || r.nom || r.NOM;
+ const prenom = r.Prenom || r.prenom || r.Prénom || r.PRÉNOM;
  if (nom && prenom) {
+ const classe = r.Classe || r.classe || r.CLASSE || 'Sans Classe';
+ const regime = r.Regime || r.regime || 'Demi-pensionnaire';
+ const autoris = r.Autorisation || r.autorisation || 'Oui';
+ 
  students.push({
  id: generateUUID(),
  nom: String(nom).trim().toUpperCase(),
  prenom: String(prenom).trim(),
- classe: String(r.Classe || r.classe || 'Sans Classe').trim(),
- regime: String(r.Regime || r.regime || 'Demi-pensionnaire').trim(),
- autorisationSortie: 'Oui',
- alerteCPE: false, docNonRendu: false, badgeRepere: '', badgeCantine: '', events: []
+ classe: String(classe).trim(),
+ regime: String(regime).trim(),
+ autorisationSortie: String(autoris).trim(),
+ alerteCPE: false,
+ docNonRendu: false,
+ badgeRepere: '',
+ badgeCantine: '',
+ events: []
  });
  count++;
  }
  });
- saveStorage(); populateClassFilter(); filterStudents();
+
+ saveStorage();
+ populateClassFilter();
+ filterStudents();
  alert(`${count} élève(s) importé(s) avec succès !`);
  }
 
  // =========================================================
- // 8. LOGIQUE LOGICIEL PERMANENCE
+ // 10. SAUVEGARDES ET EXPORTATIONS
  // =========================================================
- function detectDeviceMode() {
- const badge = document.getElementById('device-mode-badge');
- if (!badge) return;
- const width = window.innerWidth;
- if (width >= 1024) badge.innerHTML = `<i data-lucide="monitor" class="w-3.5 h-3.5"></i><span>Mode PC / Desktop</span>`;
- else if (width >= 768) badge.innerHTML = `<i data-lucide="tablet" class="w-3.5 h-3.5"></i><span>iPad / Tablette</span>`;
- else badge.innerHTML = `<i data-lucide="smartphone" class="w-3.5 h-3.5"></i><span>Mode Mobile</span>`;
- lucide.createIcons();
+ function openClearVieScolaireModal() {
+ document.getElementById('clearVieScolaireModal').classList.remove('hidden');
  }
 
- function getClassBadgeStyle(classe) {
- if (!classe) return 'bg-slate-900 text-white border-slate-900';
- const str = classe.toString().toLowerCase();
- if (str.includes('6')) return 'bg-red-500 text-white border-red-600';
- if (str.includes('5')) return 'bg-emerald-500 text-white border-emerald-600';
- if (str.includes('4')) return 'bg-amber-400 text-slate-950 border-amber-500';
- if (str.includes('3')) return 'bg-blue-600 text-white border-blue-700';
- return 'bg-slate-900 text-white border-slate-900';
+ function executeClearVieScolaireData() {
+ students.forEach(s => s.events = []);
+ saveStorage();
+ filterStudents();
+ closeModal('clearVieScolaireModal');
+ alert("Toutes les données Vie Scolaire ont été effacées.");
  }
 
- function handleSearchInput() {
- const input = document.getElementById('search-input');
- const clearBtn = document.getElementById('clear-search-btn');
- const query = input.value.trim().toLowerCase();
-
- if (query.length > 0) clearBtn.classList.remove('hidden');
- else { clearBtn.classList.add('hidden'); hideAutocompleteDropdown(); return; }
-
- searchMatches = studentDatabase.filter(s => {
- const fullStr = `${s.nom} ${s.prenom} ${s.classe}`.toLowerCase();
- return fullStr.includes(query);
- }).slice(0, 10);
-
- selectedDropdownIndex = -1;
- renderAutocompleteDropdown(searchMatches, query);
+ function openResetModal() {
+ document.getElementById('resetDbModal').classList.remove('hidden');
  }
 
- function renderAutocompleteDropdown(matches, query) {
- const dropdown = document.getElementById('autocomplete-dropdown');
- dropdown.innerHTML = '';
- if (matches.length === 0) {
- dropdown.innerHTML = `<div class="p-4 text-center text-slate-500 text-xs">Aucun élève trouvé</div>`;
- dropdown.classList.remove('hidden');
+ function executeResetDb() {
+ students = [];
+ saveStorage();
+ populateClassFilter();
+ filterStudents();
+ closeModal('resetDbModal');
+ alert("Base de données totalement effacée.");
+ }
+
+ function exportCanteenCardsJSON() {
+ const canteenData = students.map(s => ({
+ id: s.id,
+ nom: s.nom,
+ prenom: s.prenom,
+ classe: s.classe,
+ badgeCantine: s.badgeCantine || '',
+ badgeRepere: s.badgeRepere || ''
+ }));
+ const jsonStr = JSON.stringify(canteenData, null, 2);
+ shareOrDownloadFile(jsonStr, `Cantine_Cartes_${new Date().toISOString().slice(0,10)}.json`, 'application/json');
+ }
+
+ function triggerCanteenCardsImport() {
+ document.getElementById('canteenCardsInput').click();
+ }
+
+ function importCanteenCardsJSON(e) {
+ const file = e.target.files[0];
+ if (!file) return;
+
+ const reader = new FileReader();
+ reader.onload = function(evt) {
+ try {
+ const canteenData = JSON.parse(evt.target.result);
+ let count = 0;
+ canteenData.forEach(item => {
+ const student = students.find(s => s.id === item.id || (s.nom.toUpperCase() === (item.nom || '').toUpperCase() && s.prenom.toLowerCase() === (item.prenom || '').toLowerCase()));
+ if (student) {
+ if (item.badgeCantine) student.badgeCantine = item.badgeCantine;
+ if (item.badgeRepere) student.badgeRepere = item.badgeRepere;
+ count++;
+ }
+ });
+ saveStorage();
+ filterStudents();
+ alert(`Cartes cantine restaurées pour ${count} élève(s).`);
+ } catch(err) {
+ alert("Fichier JSON invalide : " + err.message);
+ }
+ };
+ reader.readAsText(file);
+ e.target.value = '';
+ }
+
+ function exportJSON() {
+ const jsonStr = JSON.stringify(students, null, 2);
+ shareOrDownloadFile(jsonStr, `sauvegarde_vie_scolaire.json`, 'application/json');
+ }
+
+ function triggerJsonImport() {
+ document.getElementById('jsonInput').click();
+ }
+
+ function importJSON(e) {
+ const file = e.target.files[0];
+ if (!file) return;
+
+ const reader = new FileReader();
+ reader.onload = function(evt) {
+ try {
+ const imported = JSON.parse(evt.target.result);
+ if (Array.isArray(imported)) {
+ students = imported;
+ students.forEach(s => {
+ if (s.alerteCPE === undefined) s.alerteCPE = false;
+ if (s.docNonRendu === undefined) s.docNonRendu = false;
+ });
+ saveStorage();
+ populateClassFilter();
+ filterStudents();
+ alert("Restauration complète effectuée avec succès !");
+ } else {
+ alert("Format JSON non reconnu.");
+ }
+ } catch(err) {
+ alert("Erreur de fichier : " + err.message);
+ }
+ };
+ reader.readAsText(file);
+ e.target.value = '';
+ }
+
+ function exportGlobalCSV() {
+ updateAutoCpeAlerts();
+ let csv = "ID;Nom;Prénom;Classe;Régime;AutorisationSortie;AlerteCPE;DocNonRendu;BadgeCantine;BadgeRepere;Retards;Absences;HeuresRetenue;EmploiBloque;Exclusions;AbsInjustifiees\n";
+ students.forEach(s => {
+ const events = s.events || [];
+ const retards = events.filter(e => e.type === 'retard').length;
+ const absences = events.filter(e => e.type === 'absence').length;
+ const retenues = events.filter(e => e.type === 'retenue' || getStatutDetailFromMotif(e.motif) === 'Retenue').reduce((sum, e) => sum + getRetenueHours(e), 0);
+ const emploiBloque = events.filter(e => e.type === 'emploi_bloque' || getStatutDetailFromMotif(e.motif) === 'emploi du temps bloqué').length;
+ const exclusions = events.filter(e => e.type === 'exclusion' || getStatutDetailFromMotif(e.motif) === 'Exclusion de cours').length;
+ const absInjustifiees = countUnjustifiedAbsences(s);
+
+ csv += `"${s.id}";"${s.nom}";"${s.prenom}";"${s.classe}";"${s.regime}";"${s.autorisationSortie}";"${s.alerteCPE ? 'Oui' : 'Non'}";"${s.docNonRendu ? 'Oui' : 'Non'}";"${s.badgeCantine || ''}";"${s.badgeRepere || ''}";${retards};${absences};${retenues};${emploiBloque};${exclusions};${absInjustifiees}\n`;
+ });
+
+ shareOrDownloadFile(csv, `Export_VieScolaire_${new Date().toISOString().slice(0,10)}.csv`, 'text/csv');
+ }
+
+ // =========================================================
+ // 11. EXPORTATION PDF DE CLASSE, ALERTE CPE & FICHES ÉLÈVES
+ // =========================================================
+ function openExportClassModal() {
+ populateClassFilter();
+ document.getElementById('exportClassModal').classList.remove('hidden');
+ }
+
+ async function generateChartImage(labels, data, title) {
+ return new Promise((resolve) => {
+ const ctx = document.getElementById('pdfChartCanvas').getContext('2d');
+ if (pdfChartInstance) pdfChartInstance.destroy();
+ pdfChartInstance = new Chart(ctx, {
+ type: 'bar',
+ data: {
+ labels: labels,
+ datasets: [{
+ label: title,
+ data: data,
+ backgroundColor: 'rgba(225, 29, 72, 0.7)',
+ borderColor: 'rgba(190, 18, 60, 1)',
+ borderWidth: 1
+ }]
+ },
+ options: {
+ animation: false,
+ responsive: false,
+ plugins: {
+ legend: { display: true },
+ title: { display: true, text: title, font: { size: 14, weight: 'bold' } }
+ },
+ scales: {
+ y: { beginAtZero: true, ticks: { precision: 0 } }
+ }
+ }
+ });
+ setTimeout(() => {
+ resolve(pdfChartInstance.toBase64Image());
+ }, 200);
+ });
+ }
+
+ function exportCpeAlertPDF() {
+ updateAutoCpeAlerts();
+ const cpeStudents = students.filter(s => !!s.alerteCPE);
+ if (cpeStudents.length === 0) {
+ alert("Aucun élève n'est actuellement marqué en Alerte CPE.");
  return;
  }
 
- matches.forEach((student, index) => {
- const item = document.createElement('div');
- const alreadyAdded = isStudentInSession(student);
- 
- if (alreadyAdded) {
- item.className = `p-3.5 flex items-center justify-between bg-slate-100/70 opacity-60 cursor-not-allowed select-none transition ${index === selectedDropdownIndex ? 'autocomplete-selected' : ''}`;
- item.innerHTML = `
- <div>
- <div class="text-sm font-bold text-slate-500 line-through"><span class="uppercase">${sanitize(student.nom)}</span> ${sanitize(student.prenom)}</div>
- <div class="text-[11px] text-slate-400">Classe : ${sanitize(student.classe)} &bull; <span class="font-bold text-slate-500">(Déjà ajouté)</span></div>
- </div>
- <span class="bg-slate-300 text-slate-600 font-bold text-[11px] px-2.5 py-1 rounded-lg border border-slate-300">${sanitize(student.classe)}</span>`;
+ const { jsPDF } = window.jspdf;
+ const doc = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' });
+
+ cpeStudents.sort((a,b) => (a.classe || '').localeCompare(b.classe || '') || (a.nom || '').localeCompare(b.nom || ''));
+
+ cpeStudents.forEach((s, index) => {
+ if (index > 0) doc.addPage();
+
+ const events = s.events || [];
+ const retards = events.filter(e => e.type === 'retard').length;
+ const absences = events.filter(e => e.type === 'absence').length;
+ const retenues = events.filter(e => e.type === 'retenue' || getStatutDetailFromMotif(e.motif) === 'Retenue').reduce((sum, e) => sum + getRetenueHours(e), 0);
+ const formattedRetenues = Number.isInteger(retenues) ? retenues : retenues.toFixed(1);
+ const emploiBloque = events.filter(e => e.type === 'emploi_bloque' || getStatutDetailFromMotif(e.motif) === 'emploi du temps bloqué').length;
+ const exclusions = events.filter(e => e.type === 'exclusion' || getStatutDetailFromMotif(e.motif) === 'Exclusion de cours').length;
+ const absInjustifiees = countUnjustifiedAbsences(s);
+
+ doc.setFont('Helvetica', 'bold');
+ doc.setFontSize(22);
+ doc.setTextColor(190, 18, 60);
+ doc.text(`${s.nom.toUpperCase()} ${s.prenom}`, 14, 20);
+
+ doc.setFontSize(15);
+ doc.setTextColor(30, 41, 59);
+ doc.text(`CLASSE : ${s.classe || 'Non renseignée'}`, 14, 28);
+
+ doc.setFontSize(10);
+ doc.setFont('Helvetica', 'normal');
+ doc.setTextColor(71, 85, 105);
+ doc.text(`Régime : ${s.regime || '--'}  |  Professeur Principal : ${s.profPrincipal || 'Non renseigné'}`, 14, 35);
+ doc.text(`Document généré le : ${new Date().toLocaleDateString('fr-FR')} à ${new Date().toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'})}  |  Statut : ALERTE CPE`, 14, 40);
+
+ doc.setLineWidth(0.5);
+ doc.setDrawColor(190, 18, 60);
+ doc.line(14, 43, 196, 43);
+
+ let currentY = 47;
+
+ const thresholdInfo = getExceededThresholdsInfo(s);
+ if (thresholdInfo.hasExceeded) {
+ doc.setFillColor(254, 242, 242);
+ doc.setDrawColor(252, 165, 165);
+ doc.setLineWidth(0.3);
+ doc.roundedRect(14, currentY, 182, 14, 2, 2, 'FD');
+
+ doc.setFont('Helvetica', 'bold');
+ doc.setFontSize(9);
+ doc.setTextColor(159, 18, 57);
+ doc.text("DÉTAIL DE L'ALERTE CPE (RAISON / SEUILS DÉPASSÉS) :", 17, currentY + 5);
+
+ doc.setFont('Helvetica', 'normal');
+ doc.setFontSize(8.5);
+ doc.setTextColor(136, 19, 55);
+ const splitText = doc.splitTextToSize(thresholdInfo.summaryText, 176);
+ doc.text(splitText, 17, currentY + 10);
+
+ currentY += 18;
+ }
+
+ doc.autoTable({
+ startY: currentY,
+ head: [['Retards', 'Absences Total', 'Abs. Injustifiées', 'Heures Colles', 'EDT Bloqué', 'Exclusions']],
+ body: [[retards, absences, absInjustifiees, `${formattedRetenues} h`, emploiBloque, exclusions]],
+ theme: 'grid',
+ headStyles: { fillColor: [190, 18, 60], textColor: [255, 255, 255], fontStyle: 'bold' },
+ styles: { fontSize: 8.5, halign: 'center', cellPadding: 2.5 }
+ });
+
+ currentY = doc.lastAutoTable.finalY + 8;
+
+ doc.setFont('Helvetica', 'bold');
+ doc.setFontSize(11);
+ doc.setTextColor(30, 41, 59);
+ doc.text("Historique des Événements & Punitions", 14, currentY);
+ currentY += 4;
+
+ if (events.length === 0) {
+ doc.setFont('Helvetica', 'italic');
+ doc.setFontSize(9);
+ doc.setTextColor(100, 116, 139);
+ doc.text("Aucun événement spécifique enregistré pour cet élève.", 14, currentY + 4);
  } else {
- item.className = `p-3.5 flex items-center justify-between cursor-pointer hover:bg-brand-50/80 transition ${index === selectedDropdownIndex ? 'autocomplete-selected' : ''}`;
- item.innerHTML = `
- <div>
- <div class="text-sm font-bold text-slate-900"><span class="uppercase">${sanitize(student.nom)}</span> ${sanitize(student.prenom)}</div>
- <div class="text-[11px] text-slate-400">Classe : ${sanitize(student.classe)}</div>
- </div>
- <span class="${getClassBadgeStyle(student.classe)} font-black text-[11px] px-2.5 py-1 rounded-lg">${sanitize(student.classe)}</span>`;
- item.onclick = () => selectStudentFromSearch(student);
- }
- dropdown.appendChild(item);
+ const sortedEvents = events.slice().sort((a,b) => {
+ const dateA = extractDateFromText(a.motif) || a.date;
+ const dateB = extractDateFromText(b.motif) || b.date;
+ return new Date(dateB) - new Date(dateA);
  });
 
- dropdown.classList.remove('hidden');
- lucide.createIcons();
- }
+ const evData = sortedEvents.map(ev => {
+ const dateStr = extractDateFromText(ev.motif) || ev.date;
+ const parsed = new Date(dateStr);
+ const formattedDate = !isNaN(parsed.getTime()) 
+ ? parsed.toLocaleString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }) 
+ : ev.date;
 
- function hideAutocompleteDropdown() {
- const dropdown = document.getElementById('autocomplete-dropdown');
- if (dropdown) dropdown.classList.add('hidden');
+ let typeLabel = ev.type.toUpperCase();
+ if (ev.type === 'retard') typeLabel = "RETARD";
+ else if (ev.type === 'absence') typeLabel = "ABSENCE";
+ else if (ev.type === 'retenue') {
+ const h = getRetenueHours(ev);
+ typeLabel = `RETENUE (${Number.isInteger(h) ? h : h.toFixed(1)}h)`;
  }
+ else if (ev.type === 'emploi_bloque') typeLabel = "EDT BLOQUÉ";
+ else if (ev.type === 'exclusion') typeLabel = "EXCLUSION";
+ else if (ev.type === 'abs_injustifiee' || (ev.pronoteType && ev.pronoteType.toLowerCase().includes('absence injustifiée'))) typeLabel = "ABS. INJUSTIFIÉE";
 
- function clearSearchInput() {
- const input = document.getElementById('search-input');
- if (input) {
- input.value = '';
- input.focus();
- }
- document.getElementById('clear-search-btn').classList.add('hidden');
- hideAutocompleteDropdown();
- }
-
- function handleSearchKeyDown(e) {
- const dropdown = document.getElementById('autocomplete-dropdown');
- if (dropdown.classList.contains('hidden') || searchMatches.length === 0) return;
- if (e.key === 'ArrowDown') { e.preventDefault(); selectedDropdownIndex = (selectedDropdownIndex + 1) % searchMatches.length; }
- else if (e.key === 'ArrowUp') { e.preventDefault(); selectedDropdownIndex = (selectedDropdownIndex - 1 + searchMatches.length) % searchMatches.length; }
- else if (e.key === 'Enter') {
- e.preventDefault();
- const target = searchMatches[selectedDropdownIndex >= 0 ? selectedDropdownIndex : 0];
- if (target && !isStudentInSession(target)) selectStudentFromSearch(target);
- }
- }
-
- function isStudentInSession(student) {
- return sessionStudents.some(s => s.id === student.id || (s.nom.toUpperCase() === student.nom.toUpperCase() && s.prenom.toLowerCase() === student.prenom.toLowerCase()));
- }
-
- function selectStudentFromSearch(student) {
- sessionStudents.unshift({ id: student.id || ('stu_' + Date.now()), nom: student.nom, prenom: student.prenom, classe: student.classe, status: 'Permanence', present: true });
- saveSessionStudents(); renderSessionList(); updateStats();
- 
- const input = document.getElementById('search-input');
- if (input) {
- input.focus();
- input.select();
- }
- handleSearchInput();
- }
-
- function cycleStudentStatus(id, event) {
- if (event) event.stopPropagation();
- const student = sessionStudents.find(s => s.id === id);
- if (!student) return;
- if (student.status === 'Permanence') student.status = 'Exclusion';
- else if (student.status === 'Exclusion') student.status = 'Autre';
- else student.status = 'Permanence';
- saveSessionStudents(); renderSessionList(); updateStats();
- }
-
- function removeFromSession(id, event) {
- if (event) event.stopPropagation();
- sessionStudents = sessionStudents.filter(s => s.id !== id);
- saveSessionStudents(); renderSessionList(); updateStats();
- }
-
- function renderSessionList() {
- const container = document.getElementById('session-list-container');
- const emptyState = document.getElementById('empty-session-state');
- container.innerHTML = '';
-
- if (sessionStudents.length === 0) { emptyState.classList.remove('hidden'); return; }
- else emptyState.classList.add('hidden');
-
- sessionStudents.forEach(student => {
- const card = document.createElement('div');
- card.className = `p-3.5 sm:p-4 rounded-2xl border transition-all flex items-center justify-between gap-3 shadow-sm bg-white border-slate-200`;
- card.innerHTML = `
- <div class="flex items-center gap-3">
- <div class="w-10 h-10 rounded-xl ${getClassBadgeStyle(student.classe)} font-black text-xs flex items-center justify-center shrink-0">${sanitize(student.classe)}</div>
- <div>
- <div class="text-sm font-extrabold text-slate-900"><span class="uppercase">${sanitize(student.nom)}</span> ${sanitize(student.prenom)}</div>
- <p class="text-[11px] text-slate-400">Classe : ${sanitize(student.classe)}</p>
- </div>
- </div>
- <div class="flex items-center gap-2">
- <button onclick="cycleStudentStatus('${student.id}', event)" class="px-3 py-2 rounded-xl text-xs font-extrabold bg-emerald-500 text-white">${student.status}</button>
- <button onclick="removeFromSession('${student.id}', event)" class="p-2 text-slate-400 hover:text-rose-600"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
- </div>`;
- container.appendChild(card);
- });
- lucide.createIcons();
- }
-
- function renderAedDropdown() {
- const select = document.getElementById('aed-select');
- select.innerHTML = '';
- aeds.forEach(aed => {
- const opt = document.createElement('option');
- opt.value = aed; opt.textContent = aed;
- if (aed === selectedAed) opt.selected = true;
- select.appendChild(opt);
- });
- select.onchange = (e) => { selectedAed = e.target.value; saveSelectedAed(); };
- }
-
- function handleAddAed(e) {
- e.preventDefault();
- const name = document.getElementById('new-aed-name').value.trim();
- if (name) {
- if (!aeds.includes(name)) { aeds.push(name); saveAeds(); }
- selectedAed = name; saveSelectedAed(); renderAedDropdown(); closeModal('modal-aed');
- }
- }
-
- function deleteCurrentAed() {
- if (aeds.length <= 1) return alert('Conserver au moins un AED.');
- aeds = aeds.filter(a => a !== selectedAed);
- selectedAed = aeds[0];
- saveAeds(); saveSelectedAed(); renderAedDropdown();
- }
-
- function handleAddUnlistedStudent(e) {
- e.preventDefault();
- const nom = document.getElementById('new-student-nom').value.trim().toUpperCase();
- const prenom = document.getElementById('new-student-prenom').value.trim();
- const classe = document.getElementById('new-student-classe').value.trim().toUpperCase();
- const status = document.getElementById('new-student-status').value || 'Permanence';
-
- if (nom && prenom && classe) {
- const newStudent = { id: 'stu_' + Date.now(), nom, prenom, classe, status, present: true };
- studentDatabase.push(newStudent); saveStudentDatabase();
- sessionStudents.unshift(newStudent); saveSessionStudents();
- renderSessionList(); updateStats(); closeModal('modal-student');
- }
- }
-
- function handleFileUpload(event) {
- const file = event.target.files[0];
- if (!file) return;
- const reader = new FileReader();
- reader.onload = function(e) {
- const workbook = XLSX.read(new Uint8Array(e.target.result), { type: 'array' });
- const rawRows = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]], { header: 1 });
- parseAndSaveExcelData(rawRows);
- };
- reader.readAsArrayBuffer(file);
- }
-
- function parseAndSaveExcelData(rows) {
- for (let r = 1; r < rows.length; r++) {
- const row = rows[r];
- if (row && row[0] && row[1]) {
- studentDatabase.push({ id: 'stu_' + Date.now() + '_' + r, nom: String(row[0]).trim().toUpperCase(), prenom: String(row[1]).trim(), classe: String(row[2] || '6°A').trim().toUpperCase() });
- }
- }
- saveStudentDatabase();
- }
-
- function loadDemoData() {
- studentDatabase = [
- { nom: 'DUPONT', prenom: 'Jean', classe: '6°A' },
- { nom: 'MARTIN', prenom: 'Sophie', classe: '5°B' }
+ return [
+ formattedDate,
+ typeLabel,
+ ev.motif || '--'
  ];
- saveStudentDatabase();
+ });
+
+ doc.autoTable({
+ startY: currentY,
+ head: [['Date & Heure', 'Événement', 'Motif / Remarque PRONOTE']],
+ body: evData,
+ theme: 'striped',
+ headStyles: { fillColor: [30, 41, 59], textColor: [255, 255, 255], fontStyle: 'bold' },
+ styles: { fontSize: 8, cellPadding: 2 },
+ columnStyles: {
+ 0: { cellWidth: 38 },
+ 1: { cellWidth: 38, fontStyle: 'bold' },
+ 2: { cellWidth: 'auto' }
+ }
+ });
+ }
+ });
+
+ doc.save(`Alerte_CPE_Feuille_Par_Eleve_${new Date().toISOString().slice(0,10)}.pdf`);
  }
 
- function clearStudentDatabase() { studentDatabase = []; saveStudentDatabase(); }
- function resetCurrentSession() { sessionStudents = []; saveSessionStudents(); renderSessionList(); updateStats(); }
+ function exportUnjustifiedAbsencesPDF(targetClassName = null) {
+ const selectedClass = targetClassName || document.getElementById('classFilter').value || document.getElementById('recapClassSelect').value || 'ALL';
+ 
+ const targetStudents = students.filter(s => {
+ const matchesClass = (selectedClass === 'ALL' || selectedClass === '') ? true : s.classe === selectedClass;
+ if (!matchesClass) return false;
 
- function openHistoryModal() { renderHistoryList(); openModal('modal-history'); }
- function filterHistoryList() { renderHistoryList(); }
- function renderHistoryList() {
- const container = document.getElementById('history-list-container');
- container.innerHTML = historyList.length === 0 ? `<p class="text-center text-xs text-slate-400">Aucun historique</p>` : '';
- historyList.forEach(item => {
- const card = document.createElement('div');
- card.className = 'p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs';
- card.textContent = `${item.dateStr} - ${item.aed} (${item.students.length} élèves)`;
- container.appendChild(card);
+ const unjEvents = (s.events || []).filter(e => {
+ const isAbs = e.type === 'absence' || e.type === 'abs_injustifiee' || (e.pronoteType && e.pronoteType.toLowerCase().includes('absence injustifiée'));
+ const hasOui = /\boui\b/i.test(e.motif || '');
+ const isJust = e.justified === 'Oui' || hasOui;
+ return isAbs && !isJust;
+ });
+
+ return unjEvents.length > 0;
+ });
+
+ if (targetStudents.length === 0) {
+ alert("Aucun élève n'enregistre d'absences injustifiées pour la sélection choisie.");
+ return;
+ }
+
+ targetStudents.sort((a,b) => (a.classe || '').localeCompare(b.classe || '') || (a.nom || '').localeCompare(b.nom || ''));
+
+ const { jsPDF } = window.jspdf;
+ const doc = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' });
+
+ targetStudents.forEach((s, index) => {
+ if (index > 0) doc.addPage();
+
+ const unjEvents = (s.events || []).filter(e => {
+ const isAbs = e.type === 'absence' || e.type === 'abs_injustifiee' || (e.pronoteType && e.pronoteType.toLowerCase().includes('absence injustifiée'));
+ const hasOui = /\boui\b/i.test(e.motif || '');
+ const isJust = e.justified === 'Oui' || hasOui;
+ return isAbs && !isJust;
+ });
+
+ doc.setFont('Helvetica', 'bold');
+ doc.setFontSize(22);
+ doc.setTextColor(185, 28, 28);
+ doc.text(`${s.nom.toUpperCase()} ${s.prenom}`, 14, 20);
+
+ doc.setFontSize(16);
+ doc.setTextColor(30, 41, 59);
+ doc.text(`CLASSE : ${s.classe || 'Non renseignée'}`, 14, 28);
+
+ doc.setFontSize(10);
+ doc.setFont('Helvetica', 'normal');
+ doc.setTextColor(71, 85, 105);
+ doc.text(`Régime : ${s.regime || '--'}  |  Professeur Principal : ${s.profPrincipal || 'Non renseigné'}`, 14, 35);
+ doc.text(`Document généré le : ${new Date().toLocaleDateString('fr-FR')}  |  Nombre d'absences injustifiées : ${unjEvents.length}`, 14, 40);
+
+ doc.setLineWidth(0.5);
+ doc.setDrawColor(220, 38, 38);
+ doc.line(14, 43, 196, 43);
+
+ const tableBody = unjEvents.map(e => {
+ const dateStr = extractDateFromText(e.motif) || e.date;
+ const parsed = new Date(dateStr);
+ const formattedDate = !isNaN(parsed.getTime()) ? parsed.toLocaleString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : (e.date || '--');
+
+ return [
+ formattedDate,
+ "ABSENCE INJUSTIFIÉE",
+ e.motif || 'Aucun motif renseigné'
+ ];
+ });
+
+ doc.autoTable({
+ startY: 48,
+ head: [['Date & Heure', 'Statut', 'Motif / Remarque PRONOTE']],
+ body: tableBody,
+ theme: 'striped',
+ headStyles: { fillColor: [185, 28, 28], textColor: [255, 255, 255], fontStyle: 'bold' },
+ styles: { fontSize: 9, cellPadding: 3 },
+ columnStyles: {
+ 0: { cellWidth: 42 },
+ 1: { cellWidth: 45, fontStyle: 'bold' },
+ 2: { cellWidth: 'auto' }
+ }
+ });
+ });
+
+ const filename = targetClassName 
+ ? `Absences_Injustifiees_${targetClassName}_${new Date().toISOString().slice(0,10)}.pdf`
+ : `Absences_Injustifiees_Classe_${new Date().toISOString().slice(0,10)}.pdf`;
+
+ doc.save(filename);
+ }
+
+ function exportSingleStudentUnjustifiedAbsencesPDF() {
+ if (!selectedStudentId) return;
+ const student = students.find(s => s.id === selectedStudentId);
+ if (!student) return;
+
+ const unjEvents = (student.events || []).filter(e => {
+ const isAbs = e.type === 'absence' || e.type === 'abs_injustifiee' || (e.pronoteType && e.pronoteType.toLowerCase().includes('absence injustifiée'));
+ const hasOui = /\boui\b/i.test(e.motif || '');
+ const isJust = e.justified === 'Oui' || hasOui;
+ return isAbs && !isJust;
+ });
+
+ if (unjEvents.length === 0) {
+ alert(`${student.prenom} ${student.nom} n'a aucune absence injustifiée enregistrée.`);
+ return;
+ }
+
+ const { jsPDF } = window.jspdf;
+ const doc = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' });
+
+ doc.setFont('Helvetica', 'bold');
+ doc.setFontSize(22);
+ doc.setTextColor(185, 28, 28);
+ doc.text(`${student.nom.toUpperCase()} ${student.prenom}`, 14, 20);
+
+ doc.setFontSize(16);
+ doc.setTextColor(30, 41, 59);
+ doc.text(`CLASSE : ${student.classe || 'Non renseignée'}`, 14, 28);
+
+ doc.setFontSize(10);
+ doc.setFont('Helvetica', 'normal');
+ doc.setTextColor(71, 85, 105);
+ doc.text(`Régime : ${student.regime || '--'}  |  Professeur Principal : ${student.profPrincipal || 'Non renseigné'}`, 14, 35);
+ doc.text(`Document généré le : ${new Date().toLocaleDateString('fr-FR')}  |  Nombre d'absences injustifiées : ${unjEvents.length}`, 14, 40);
+
+ doc.setLineWidth(0.5);
+ doc.setDrawColor(220, 38, 38);
+ doc.line(14, 43, 196, 43);
+
+ const tableBody = unjEvents.map(e => {
+ const dateStr = extractDateFromText(e.motif) || e.date;
+ const parsed = new Date(dateStr);
+ const formattedDate = !isNaN(parsed.getTime()) ? parsed.toLocaleString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : (e.date || '--');
+
+ return [
+ formattedDate,
+ "ABSENCE INJUSTIFIÉE",
+ e.motif || 'Aucun motif renseigné'
+ ];
+ });
+
+ doc.autoTable({
+ startY: 48,
+ head: [['Date & Heure', 'Statut', 'Motif / Remarque PRONOTE']],
+ body: tableBody,
+ theme: 'striped',
+ headStyles: { fillColor: [185, 28, 28], textColor: [255, 255, 255], fontStyle: 'bold' },
+ styles: { fontSize: 9, cellPadding: 3 },
+ columnStyles: {
+ 0: { cellWidth: 42 },
+ 1: { cellWidth: 45, fontStyle: 'bold' },
+ 2: { cellWidth: 'auto' }
+ }
+ });
+
+ doc.save(`Absences_Injustifiees_${student.nom.toUpperCase()}_${student.prenom}_${new Date().toISOString().slice(0,10)}.pdf`);
+ }
+
+ async function handleExportClassPDF(e) {
+ e.preventDefault();
+ const selectedClass = document.getElementById('exportClassSelect').value;
+ const exportType = document.getElementById('exportTypeSelect').value;
+
+ closeModal('exportClassModal');
+
+ if (exportType === 'unjustified') {
+ exportUnjustifiedAbsencesPDF(selectedClass === 'ALL' ? null : selectedClass);
+ return;
+ }
+
+ const { jsPDF } = window.jspdf;
+ const doc = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' });
+
+ const targetStudents = selectedClass === 'ALL' ? students : students.filter(s => s.classe === selectedClass);
+ targetStudents.sort((a,b) => (a.nom || '').localeCompare(b.nom || ''));
+
+ doc.setFont('Helvetica', 'bold');
+ doc.setFontSize(16);
+ doc.text(`Rapport Vie Scolaire - ${selectedClass === 'ALL' ? 'Toutes les classes' : selectedClass}`, 14, 15);
+ 
+ doc.setFontSize(9);
+ doc.setFont('Helvetica', 'normal');
+ doc.text(`Généré le : ${new Date().toLocaleDateString('fr-FR')} - Total élèves : ${targetStudents.length}`, 14, 21);
+
+ let currentY = 28;
+
+ let totauxCompteurs = {
+ 'Retards': 0,
+ 'Absences': 0,
+ 'Heures de Retenue': 0,
+ 'Emploi du temps bloqué': 0,
+ 'Exclusions de cours': 0,
+ 'Absences injustifiées': 0
+ };
+
+ const preparedStudentData = targetStudents.map(s => {
+ const events = s.events || [];
+ const retards = events.filter(e => e.type === 'retard').length;
+ const absences = events.filter(e => e.type === 'absence').length;
+ const retenues = events.filter(e => e.type === 'retenue' || getStatutDetailFromMotif(e.motif) === 'Retenue').reduce((sum, e) => sum + getRetenueHours(e), 0);
+ const emploiBloque = events.filter(e => e.type === 'emploi_bloque' || getStatutDetailFromMotif(e.motif) === 'emploi du temps bloqué').length;
+ const exclusions = events.filter(e => e.type === 'exclusion' || getStatutDetailFromMotif(e.motif) === 'Exclusion de cours').length;
+ const absInjustifiees = countUnjustifiedAbsences(s);
+
+ totauxCompteurs['Retards'] += retards;
+ totauxCompteurs['Absences'] += absences;
+ totauxCompteurs['Heures de Retenue'] += retenues;
+ totauxCompteurs['Emploi du temps bloqué'] += emploiBloque;
+ totauxCompteurs['Exclusions de cours'] += exclusions;
+ totauxCompteurs['Absences injustifiées'] += absInjustifiees;
+
+ const totalEvents = retards + absences + retenues + emploiBloque + exclusions + absInjustifiees;
+
+ return {
+ student: s,
+ retards,
+ absences,
+ retenues,
+ emploiBloque,
+ exclusions,
+ absInjustifiees,
+ totalEvents
+ };
+ });
+
+ if (exportType === 'summary' || exportType === 'both') {
+ doc.setFont('Helvetica', 'bold');
+ doc.setFontSize(12);
+ doc.text("1. Synthèse globale des compteurs", 14, currentY);
+ currentY += 5;
+
+ const sortedTotaux = Object.entries(totauxCompteurs).sort((a, b) => b[1] - a[1]);
+
+ doc.autoTable({
+ startY: currentY,
+ head: [['Type de Compteur / Événement', 'Total de la Classe / Sélection']],
+ body: sortedTotaux.map(([cat, count]) => [cat, typeof count === 'number' && !Number.isInteger(count) ? count.toFixed(1) : count]),
+ theme: 'grid',
+ headStyles: { fillColor: [49, 46, 129] },
+ styles: { fontSize: 8 }
+ });
+
+ currentY = doc.lastAutoTable.finalY + 8;
+
+ const chartLabels = sortedTotaux.map(item => item[0]);
+ const chartData = sortedTotaux.map(item => item[1]);
+ const chartImage = await generateChartImage(chartLabels, chartData, `Répartition des compteurs (${selectedClass})`);
+
+ doc.addImage(chartImage, 'PNG', 14, currentY, 180, 85);
+ currentY += 92;
+
+ if (currentY > 230) {
+ doc.addPage();
+ currentY = 15;
+ }
+
+ doc.setFont('Helvetica', 'bold');
+ doc.setFontSize(12);
+ doc.text("2. Détail synthétique par élève (trié par volume d'événements)", 14, currentY);
+ currentY += 5;
+
+ const sortedStudentData = [...preparedStudentData].sort((a, b) => b.totalEvents - a.totalEvents);
+
+ const tableData = sortedStudentData.map(item => {
+ const s = item.student;
+ const formattedRetenues = Number.isInteger(item.retenues) ? item.retenues : item.retenues.toFixed(1);
+
+ let alertesStr = [];
+ if (s.alerteCPE) alertesStr.push("CPE");
+ if (s.docNonRendu) alertesStr.push("DOC");
+ const alertesLabel = alertesStr.length > 0 ? alertesStr.join('/') : '--';
+
+ return [
+ `${s.nom.toUpperCase()} ${s.prenom}`,
+ s.classe,
+ s.regime,
+ alertesLabel,
+ s.autorisationSortie === 'Oui' ? 'OUI' : 'NON',
+ item.retards,
+ item.absences,
+ `${formattedRetenues} h`,
+ item.emploiBloque,
+ item.exclusions,
+ item.absInjustifiees
+ ];
+ });
+
+ doc.autoTable({
+ startY: currentY,
+ head: [['Élève', 'Classe', 'Régime', 'Alertes', 'Sortie', 'Ret.', 'Abs.', 'Colles', 'EDT Blq.', 'Excl.', 'Abs. Injust.']],
+ body: tableData,
+ theme: 'striped',
+ headStyles: { fillColor: [30, 41, 59] },
+ styles: { fontSize: 7, cellPadding: 1.5 }
+ });
+
+ currentY = doc.lastAutoTable.finalY + 10;
+ }
+
+ if (exportType === 'details' || exportType === 'both') {
+ if (currentY > 230) {
+ doc.addPage();
+ currentY = 15;
+ }
+
+ doc.setFont('Helvetica', 'bold');
+ doc.setFontSize(12);
+ doc.text("3. Historique chronologique et détaillé des événements", 14, currentY);
+ currentY += 6;
+
+ targetStudents.forEach(s => {
+ const events = s.events || [];
+ if (events.length > 0) {
+ if (currentY > 250) {
+ doc.addPage();
+ currentY = 15;
+ }
+
+ doc.setFont('Helvetica', 'bold');
+ doc.setFontSize(10);
+ doc.text(`${s.nom.toUpperCase()} ${s.prenom} (${s.classe})`, 14, currentY);
+ currentY += 4;
+
+ const evData = events.map(ev => {
+ const dateStr = extractDateFromText(ev.motif) || ev.date;
+ const parsed = new Date(dateStr);
+ const formattedDate = !isNaN(parsed.getTime()) ? parsed.toLocaleString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : ev.date;
+ 
+ let hDetail = ev.type.toUpperCase();
+ if (ev.type === 'retenue') {
+ const h = getRetenueHours(ev);
+ hDetail = `RETENUE (${Number.isInteger(h) ? h : h.toFixed(1)}h)`;
+ }
+
+ return [
+ formattedDate,
+ hDetail,
+ ev.motif || '--'
+ ];
+ });
+
+ doc.autoTable({
+ startY: currentY,
+ head: [['Date', 'Type', 'Motif / Détail']],
+ body: evData,
+ theme: 'plain',
+ styles: { fontSize: 7 },
+ margin: { left: 14 }
+ });
+
+ currentY = doc.lastAutoTable.finalY + 6;
+ }
  });
  }
 
- function clearAllHistory() { historyList = []; saveHistory(); renderHistoryList(); }
-
- function updateStats() {
- document.getElementById('stat-total').textContent = sessionStudents.length;
- document.getElementById('stat-perm').textContent = sessionStudents.filter(s => s.status === 'Permanence').length;
- document.getElementById('stat-excl').textContent = sessionStudents.filter(s => s.status === 'Exclusion').length;
- document.getElementById('stat-autre').textContent = sessionStudents.filter(s => s.status === 'Autre').length;
+ doc.save(`Rapport_VieScolaire_${selectedClass}_${new Date().toISOString().slice(0,10)}.pdf`);
  }
 
- function triggerPrint() {
- const now = new Date();
- document.getElementById('print-title-header').textContent = `PERMANENCE DE ${(selectedAed || 'AED').toUpperCase()}`;
- document.getElementById('print-date').textContent = now.toLocaleDateString('fr-FR');
- document.getElementById('print-full-time').textContent = now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+ function exportStudentPDF() {
+ if (!selectedStudentId) return;
+ const student = students.find(s => s.id === selectedStudentId);
+ if (!student) return;
 
- const tbody = document.getElementById('print-table-body');
- tbody.innerHTML = '';
- sessionStudents.forEach((s, idx) => {
- const tr = document.createElement('tr');
- tr.innerHTML = `<td>${idx + 1}</td><td>${sanitize(s.nom)} ${sanitize(s.prenom)}</td><td>${sanitize(s.classe)}</td><td>${sanitize(s.status)}</td><td style="text-align:center;">PRÉSENT</td>`;
- tbody.appendChild(tr);
+ const { jsPDF } = window.jspdf;
+ const doc = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' });
+
+ doc.setFont('Helvetica', 'bold');
+ doc.setFontSize(16);
+ doc.text(`Fiche Individuelle - ${student.nom.toUpperCase()} ${student.prenom}`, 14, 15);
+
+ doc.setFontSize(10);
+ doc.setFont('Helvetica', 'normal');
+ doc.text(`Classe : ${student.classe || '--'} | Régime : ${student.regime || '--'} | Sortie : ${student.autorisationSortie === 'Oui' ? 'AUTORISÉE' : 'INTERDITE'}`, 14, 22);
+ doc.text(`Alerte CPE : ${student.alerteCPE ? 'OUI' : 'NON'} | Document non rendu : ${student.docNonRendu ? 'OUI' : 'NON'}`, 14, 27);
+ doc.text(`Professeur Principal : ${student.profPrincipal || 'Non renseigné'}`, 14, 32);
+
+ const events = student.events || [];
+ const retards = events.filter(e => e.type === 'retard').length;
+ const absences = events.filter(e => e.type === 'absence').length;
+ const retenues = events.filter(e => e.type === 'retenue' || getStatutDetailFromMotif(e.motif) === 'Retenue').reduce((sum, e) => sum + getRetenueHours(e), 0);
+ const formattedRetenues = Number.isInteger(retenues) ? retenues : retenues.toFixed(1);
+
+ doc.autoTable({
+ startY: 37,
+ head: [['Retards', 'Absences', 'Heures de Retenue']],
+ body: [[retards, absences, `${formattedRetenues} h`]],
+ theme: 'grid',
+ headStyles: { fillColor: [49, 46, 129] }
  });
- window.print();
+
+ const evData = events.map(ev => {
+ const dateStr = extractDateFromText(ev.motif) || ev.date;
+ const parsed = new Date(dateStr);
+ const formattedDate = !isNaN(parsed.getTime()) ? parsed.toLocaleString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : ev.date;
+ 
+ let detail = ev.type.toUpperCase();
+ if (ev.type === 'retenue') {
+ const h = getRetenueHours(ev);
+ detail = `RETENUE (${Number.isInteger(h) ? h : h.toFixed(1)}h)`;
+ }
+
+ return [formattedDate, detail, ev.motif || '--'];
+ });
+
+ doc.autoTable({
+ startY: doc.lastAutoTable.finalY + 8,
+ head: [['Date & Heure', 'Événement', 'Commentaire / Motif']],
+ body: evData,
+ theme: 'striped',
+ styles: { fontSize: 8 }
+ });
+
+ doc.save(`Fiche_${student.nom.toUpperCase()}_${student.prenom}_${new Date().toISOString().slice(0,10)}.pdf`);
  }
 
  // =========================================================
- // 9. FONCTIONS EXPORTATIONS & MODALES VIE SCOLAIRE
+ // 12. GESTION DES ÉLÈVES
  // =========================================================
- function openClearVieScolaireModal() { document.getElementById('clearVieScolaireModal').classList.remove('hidden'); }
- function executeClearVieScolaireData() { students.forEach(s => s.events = []); saveStorage(); filterStudents(); closeModal('clearVieScolaireModal'); }
- function openResetModal() { document.getElementById('resetDbModal').classList.remove('hidden'); }
- function executeResetDb() { students = []; saveStorage(); populateClassFilter(); filterStudents(); closeModal('resetDbModal'); }
- function exportCanteenCardsJSON() { shareOrDownloadFile(JSON.stringify(students, null, 2), `Cantine_Cartes.json`); }
- function triggerCanteenCardsImport() { document.getElementById('canteenCardsInput').click(); }
- function importCanteenCardsJSON(e) { alert("Importation effectuée."); }
- function exportJSON() { shareOrDownloadFile(JSON.stringify(students, null, 2), `sauvegarde_vie_scolaire.json`); }
- function triggerJsonImport() { document.getElementById('jsonInput').click(); }
- function importJSON(e) { alert("Importation effectuée."); }
- function exportGlobalCSV() { shareOrDownloadFile("ID;Nom;Prénom;Classe\n", `Export_VieScolaire.csv`, 'text/csv'); }
- function openExportClassModal() { populateClassFilter(); document.getElementById('exportClassModal').classList.remove('hidden'); }
- function exportCpeAlertPDF() { alert("Génération PDF Alerte CPE."); }
- function exportUnjustifiedAbsencesPDF() { alert("Génération PDF Absences Injustifiées."); }
- function exportSingleStudentUnjustifiedAbsencesPDF() { alert("Génération PDF Élève."); }
- function handleExportClassPDF(e) { e.preventDefault(); closeModal('exportClassModal'); alert("Génération PDF Classe."); }
- function exportStudentPDF() { alert("Génération Fiche Élève."); }
- function openAddStudentModal() { document.getElementById('addStudentForm').reset(); document.getElementById('addStudentModal').classList.remove('hidden'); }
+ function openAddStudentModal() {
+ document.getElementById('addStudentForm').reset();
+ document.getElementById('addStudentModal').classList.remove('hidden');
+ }
+
  function handleAddStudent(e) {
  e.preventDefault();
- students.push({
+ const nom = document.getElementById('newNom').value.trim().toUpperCase();
+ const prenom = document.getElementById('newPrenom').value.trim();
+ const classe = document.getElementById('newClasse').value.trim();
+ const regime = document.getElementById('newRegime').value;
+ const autoris = document.getElementById('newAutorisation').value;
+ const alerteCpeVal = document.getElementById('newAlerteCpe').value === 'Oui';
+ const docNonRenduVal = document.getElementById('newDocNonRendu').value === 'Oui';
+ const prof = document.getElementById('newProf').value.trim();
+
+ const newStudent = {
  id: generateUUID(),
- nom: document.getElementById('newNom').value.trim().toUpperCase(),
- prenom: document.getElementById('newPrenom').value.trim(),
- classe: document.getElementById('newClasse').value.trim(),
- regime: document.getElementById('newRegime').value,
- autorisationSortie: document.getElementById('newAutorisation').value,
- alerteCPE: document.getElementById('newAlerteCpe').value === 'Oui',
- docNonRendu: document.getElementById('newDocNonRendu').value === 'Oui',
- profPrincipal: document.getElementById('newProf').value.trim(),
- badgeRepere: '', badgeCantine: '', events: []
- });
- saveStorage(); populateClassFilter(); filterStudents(); closeModal('addStudentModal');
+ nom,
+ prenom,
+ classe,
+ regime,
+ autorisationSortie: autoris,
+ alerteCPE: alerteCpeVal,
+ docNonRendu: docNonRenduVal,
+ profPrincipal: prof,
+ badgeRepere: '',
+ badgeCantine: '',
+ events: []
+ };
+
+ students.push(newStudent);
+ saveStorage();
+ populateClassFilter();
+ filterStudents();
+ closeModal('addStudentModal');
  }
- function confirmDeleteStudent() { document.getElementById('deleteModal').classList.remove('hidden'); }
+
+ function confirmDeleteStudent() {
+ document.getElementById('deleteModal').classList.remove('hidden');
+ }
+
  function executeDeleteStudent() {
  if (!selectedStudentId) return;
  students = students.filter(s => s.id !== selectedStudentId);
- saveStorage(); closeModal('deleteModal'); showListPage();
- }
- function handleSaveEvent(e) { e.preventDefault(); closeModal('eventModal'); }
- function deleteEvent(eventId) {
- if (!selectedStudentId) return;
- const student = students.find(s => s.id === selectedStudentId);
- if (student) { student.events = (student.events || []).filter(ev => ev.id !== eventId); saveStorage(); renderHistoryTable(student); }
+ saveStorage();
+ closeModal('deleteModal');
+ showListPage();
  }
  </script>
 </body>
