@@ -2890,6 +2890,16 @@
  matches.forEach((student, index) => {
  const item = document.createElement('div');
  const alreadyAdded = isStudentInSession(student);
+ 
+ if (alreadyAdded) {
+ item.className = `p-3.5 flex items-center justify-between bg-slate-100/70 opacity-60 cursor-not-allowed select-none transition ${index === selectedDropdownIndex ? 'autocomplete-selected' : ''}`;
+ item.innerHTML = `
+ <div>
+ <div class="text-sm font-bold text-slate-500 line-through"><span class="uppercase">${sanitize(student.nom)}</span> ${sanitize(student.prenom)}</div>
+ <div class="text-[11px] text-slate-400">Classe : ${sanitize(student.classe)} &bull; <span class="font-bold text-slate-500">(Déjà ajouté)</span></div>
+ </div>
+ <span class="bg-slate-300 text-slate-600 font-bold text-[11px] px-2.5 py-1 rounded-lg border border-slate-300">${sanitize(student.classe)}</span>`;
+ } else {
  item.className = `p-3.5 flex items-center justify-between cursor-pointer hover:bg-brand-50/80 transition ${index === selectedDropdownIndex ? 'autocomplete-selected' : ''}`;
  item.innerHTML = `
  <div>
@@ -2897,7 +2907,8 @@
  <div class="text-[11px] text-slate-400">Classe : ${sanitize(student.classe)}</div>
  </div>
  <span class="${getClassBadgeStyle(student.classe)} font-black text-[11px] px-2.5 py-1 rounded-lg">${sanitize(student.classe)}</span>`;
- if (!alreadyAdded) item.onclick = () => selectStudentFromSearch(student);
+ item.onclick = () => selectStudentFromSearch(student);
+ }
  dropdown.appendChild(item);
  });
 
@@ -2912,7 +2923,10 @@
 
  function clearSearchInput() {
  const input = document.getElementById('search-input');
- if (input) input.value = '';
+ if (input) {
+ input.value = '';
+ input.focus();
+ }
  document.getElementById('clear-search-btn').classList.add('hidden');
  hideAutocompleteDropdown();
  }
@@ -2935,7 +2949,14 @@
 
  function selectStudentFromSearch(student) {
  sessionStudents.unshift({ id: student.id || ('stu_' + Date.now()), nom: student.nom, prenom: student.prenom, classe: student.classe, status: 'Permanence', present: true });
- saveSessionStudents(); renderSessionList(); updateStats(); clearSearchInput();
+ saveSessionStudents(); renderSessionList(); updateStats();
+ 
+ const input = document.getElementById('search-input');
+ if (input) {
+ input.focus();
+ input.select();
+ }
+ handleSearchInput();
  }
 
  function cycleStudentStatus(id, event) {
