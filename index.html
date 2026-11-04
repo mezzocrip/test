@@ -1369,13 +1369,18 @@
  searchInputEl.addEventListener('keydown', function(event) {
  if (event.key === 'Enter') {
  event.preventDefault();
- if (currentSearchSuggestions.length > 0) {
- openStudentDetail(currentSearchSuggestions[0].id);
+ const studentToOpen = currentSearchSuggestions.length > 0 ? currentSearchSuggestions[0].id : null;
+ 
+ // Effacer le champ de recherche et réinitialiser l'affichage
+ searchInputEl.value = '';
+ document.getElementById('clearSearchBtn').classList.add('hidden');
  hideSearchDropdown();
  searchInputEl.blur();
+ 
+ if (studentToOpen) {
+ openStudentDetail(studentToOpen);
  } else {
  filterStudents();
- searchInputEl.blur();
  }
  }
  });
