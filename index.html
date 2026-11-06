@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" class="h-full bg-slate-100 overflow-x-hidden">
+<html lang="fr" class="h-full bg-slate-100">
 <head>
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -27,13 +27,6 @@
  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
  
 <style>
- html, body {
-   overflow-x: hidden !important;
-   max-width: 100% !important;
-   width: 100vw;
-   overscroll-behavior-x: none;
- }
-
  * {
  touch-action: manipulation;
  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -77,10 +70,10 @@
  }
  </style>
 </head>
-<body class="h-full text-slate-800 antialiased flex flex-col min-h-screen pb-20 md:pb-0 overflow-x-hidden">
+<body class="h-full text-slate-800 antialiased flex flex-col min-h-screen pb-20 md:pb-0">
 
  <!-- EN-TÊTE PRINCIPAL -->
- <header class="bg-indigo-900 text-white shadow-md sticky top-0 z-30 no-print border-b border-indigo-800/50 w-full overflow-hidden">
+ <header class="bg-indigo-900 text-white shadow-md sticky top-0 z-30 no-print border-b border-indigo-800/50">
  <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2">
  
  <div class="flex items-center space-x-2.5 shrink-0">
@@ -178,7 +171,7 @@
  </header>
 
  <!-- NAVIGATION MOBILE -->
- <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-slate-200 z-40 px-4 py-2 flex justify-around items-center shadow-lg pb-safe no-print w-full">
+ <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-slate-200 z-40 px-4 py-2 flex justify-around items-center shadow-lg pb-safe no-print">
  <button onclick="showListPage()" class="flex flex-col items-center gap-1 text-slate-600 active:text-indigo-600">
  <i data-lucide="users" class="w-5 h-5"></i>
  <span class="text-[10px] font-semibold">Élèves</span>
@@ -201,11 +194,11 @@
  </button>
  </nav>
 
- <main class="flex-1 max-w-7xl w-full mx-auto p-3 sm:p-6 lg:p-8 overflow-x-hidden">
+ <main class="flex-1 max-w-7xl w-full mx-auto p-3 sm:p-6 lg:p-8">
 
  <!-- PAGE 1 : LISTE DES ÉLÈVES -->
- <section id="pageList" class="page-fade space-y-4 max-w-full">
- <div class="bg-white rounded-2xl p-3.5 sm:p-5 shadow-xs border border-slate-200/80 flex flex-col gap-4 max-w-full">
+ <section id="pageList" class="page-fade space-y-4">
+ <div class="bg-white rounded-2xl p-3.5 sm:p-5 shadow-xs border border-slate-200/80 flex flex-col gap-4">
  
  <div class="flex flex-col lg:flex-row gap-3 justify-between items-stretch lg:items-center">
  <div class="relative w-full lg:w-96">
@@ -268,7 +261,7 @@
  <input type="file" id="canteenCardsInput" accept=".json" class="hidden" onchange="importCanteenCardsJSON(event)">
  <input type="file" id="jsonInput" accept=".json" class="hidden" onchange="importJSON(event)">
 
- <div class="flex items-center justify-between gap-2 border-t border-slate-100 pt-3 overflow-x-auto no-scrollbar w-full">
+ <div class="flex items-center justify-between gap-2 border-t border-slate-100 pt-3 overflow-x-auto no-scrollbar">
  <div class="flex items-center gap-2 shrink-0">
  <span class="text-xs font-bold text-slate-400 uppercase tracking-wider mr-1 hidden sm:inline">Filtres :</span>
  <button id="btnFilterAll" onclick="setQuickFilter('all')" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-indigo-600 text-white shadow-2xs flex items-center gap-1.5 transition">
@@ -299,7 +292,7 @@
  </div>
  </div>
 
- <div id="studentsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 max-w-full"></div>
+ <div id="studentsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"></div>
 
  <div id="emptyMessage" class="hidden text-center py-12 bg-white rounded-2xl border border-dashed border-slate-300 p-6">
  <i data-lucide="user-x" class="w-12 h-12 text-slate-300 mx-auto mb-3"></i>
@@ -309,7 +302,7 @@
  </section>
 
  <!-- PAGE 2 : FICHE DÉTAILLÉE ÉLÈVE -->
- <section id="pageDetail" class="hidden page-fade space-y-4 sm:space-y-6 max-w-full">
+ <section id="pageDetail" class="hidden page-fade space-y-4 sm:space-y-6">
  <div class="flex items-center justify-between gap-2 no-print">
  <button onclick="showListPage()" class="inline-flex items-center gap-2 bg-white active:bg-slate-100 text-slate-700 font-semibold px-3.5 py-2 rounded-xl border border-slate-200 shadow-2xs transition text-xs sm:text-sm">
  <i data-lucide="arrow-left" class="w-4 h-4"></i>
@@ -332,7 +325,7 @@
  </div>
  </div>
 
- <div id="studentDetailCard" class="bg-white rounded-2xl shadow-xs border border-slate-200 overflow-hidden max-w-full">
+ <div id="studentDetailCard" class="bg-white rounded-2xl shadow-xs border border-slate-200 overflow-hidden">
  <div class="bg-slate-900 text-white p-5 sm:p-7 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
  <div class="flex items-center space-x-4">
  <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-indigo-500/20 border-2 border-indigo-400/40 flex items-center justify-center text-indigo-300 font-extrabold text-xl sm:text-2xl shrink-0 shadow-inner">
@@ -399,7 +392,7 @@
  </div>
 
  <!-- BARRE INTERRUPTEURS ALERTES FICHE ÉLÈVE -->
- <div class="bg-slate-100 border-b border-slate-200 px-4 sm:px-6 py-3 flex flex-wrap items-center gap-4 sm:gap-8 no-print w-full">
+ <div class="bg-slate-100 border-b border-slate-200 px-4 sm:px-6 py-3 flex flex-wrap items-center gap-4 sm:gap-8 no-print">
  <div class="flex items-center gap-2.5">
  <i data-lucide="siren" class="w-4 h-4 text-rose-600"></i>
  <span class="text-xs font-bold text-slate-700">Alerter CPE :</span>
@@ -421,7 +414,7 @@
  </div>
  </div>
 
- <div class="p-4 sm:p-6 border-b border-slate-200 bg-slate-50/50 w-full">
+ <div class="p-4 sm:p-6 border-b border-slate-200 bg-slate-50/50">
  <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Compteurs & Synthèse</h3>
  <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 sm:gap-3">
  <div class="bg-white p-3.5 rounded-xl border border-slate-200 text-center shadow-2xs">
@@ -456,7 +449,7 @@
  </div>
  </div>
 
- <div class="p-4 sm:p-6 w-full">
+ <div class="p-4 sm:p-6">
  <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 mb-4">
  <h3 class="text-sm font-semibold text-slate-800 flex items-center gap-2">
  <i data-lucide="history" class="w-4 h-4 text-indigo-600"></i>
@@ -469,7 +462,7 @@
  </div>
 
  <!-- ONGLETS DE FILTRAGE HISTORIQUE -->
- <div class="mb-4 bg-slate-100/80 p-1.5 rounded-2xl flex items-center gap-1 overflow-x-auto no-scrollbar border border-slate-200/60 no-print w-full">
+ <div class="mb-4 bg-slate-100/80 p-1.5 rounded-2xl flex items-center gap-1 overflow-x-auto no-scrollbar border border-slate-200/60 no-print">
  <button onclick="setHistoryTab('all')" id="hist-tab-all" class="hist-tab shrink-0 px-3 py-1.5 rounded-xl text-xs font-semibold transition bg-indigo-600 text-white shadow-2xs">
  Tous
  </button>
@@ -490,7 +483,7 @@
  </button>
  </div>
 
- <div class="overflow-x-auto w-full">
+ <div class="overflow-x-auto -mx-4 sm:mx-0">
  <table class="w-full text-left text-xs sm:text-sm border-collapse min-w-[600px]">
  <thead>
  <tr class="border-b border-slate-200 text-[11px] font-bold uppercase text-slate-400 bg-slate-50/80">
@@ -513,7 +506,7 @@
  </section>
 
  <!-- PAGE 3 : RÉCAPITULATIF DES ÉVÉNEMENTS -->
- <section id="pageRecap" class="hidden page-fade space-y-4 sm:space-y-6 max-w-full">
+ <section id="pageRecap" class="hidden page-fade space-y-4 sm:space-y-6">
  <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
  <div>
  <h2 class="text-lg sm:text-xl font-bold text-slate-800 flex items-center gap-2">
@@ -556,7 +549,7 @@
  </div>
 
  <!-- ONGLETS RÉCAPITULATIF PAR CATÉGORIE -->
- <div id="recapCategoryTabs" class="border-b border-slate-200 bg-white rounded-2xl shadow-2xs p-1.5 flex items-center gap-1 overflow-x-auto no-scrollbar w-full">
+ <div id="recapCategoryTabs" class="border-b border-slate-200 bg-white rounded-2xl shadow-2xs p-1.5 flex items-center gap-1 overflow-x-auto no-scrollbar">
  <button onclick="switchRecapTab('retard')" id="tab-retard" class="recap-tab shrink-0 px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition bg-indigo-600 text-white shadow-2xs">
  <i data-lucide="clock" class="w-4 h-4"></i>
  <span>Retards</span>
@@ -595,7 +588,7 @@
  </div>
 
  <!-- FILTRE ET BOUTONS DE TRI GLOBAL -->
- <div id="recapClassFilterContainer" class="bg-white p-3 rounded-2xl border border-slate-200 shadow-2xs flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 max-w-full">
+ <div id="recapClassFilterContainer" class="bg-white p-3 rounded-2xl border border-slate-200 shadow-2xs flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
  <div class="flex items-center gap-2">
  <i data-lucide="filter" class="w-4 h-4 text-indigo-600"></i>
  <span class="text-xs font-semibold text-slate-700">Sélectionner la classe :</span>
@@ -610,7 +603,7 @@
  </button>
  </div>
 
- <div id="recapCategoryList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-4 max-w-full"></div>
+ <div id="recapCategoryList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-4"></div>
 
  <div id="recapEmptyMessage" class="hidden text-center py-12 bg-white rounded-2xl border border-dashed border-slate-300 p-6">
  <i data-lucide="check-circle-2" class="w-12 h-12 text-emerald-400 mx-auto mb-3"></i>
@@ -1493,6 +1486,7 @@
  const item = document.createElement('div');
  item.className = "flex items-center justify-between p-3 hover:bg-slate-50 cursor-pointer transition";
  item.onclick = () => {
+ clearSearch();
  openStudentDetail(safeId);
  hideSearchDropdown();
  };
