@@ -2873,13 +2873,19 @@
  lines.forEach(line => {
  if (!line.trim()) return;
 
+ const lineLower = line.toLowerCase();
+ 
+ // RÈGLE : Ignorer toutes les « absences repas »
+ if (lineLower.includes('absence repas') || lineLower.includes('absences repas')) {
+     return;
+ }
+
  students.forEach(student => {
  const nom = (student.nom || '').trim().toUpperCase();
  const prenom = (student.prenom || '').trim().toLowerCase();
  const lineUpper = line.toUpperCase();
 
  if (nom.length > 1 && lineUpper.includes(nom)) {
- const lineLower = line.toLowerCase();
  if (prenom.length > 1 && lineLower.includes(prenom)) {
  let eventType = null;
  if (lineLower.includes('retard')) eventType = 'retard';
@@ -2919,7 +2925,7 @@
  saveStorage();
  populateClassFilter();
  filterStudents();
- alert(`Importation PRONOTE terminée : ${importedCount} événement(s) associé(s) aux élèves.`);
+ alert(`Importation PRONOTE terminée : ${importedCount} événement(s) associé(s) aux élèves (absences repas ignorées).`);
  }
 
  function triggerFileImport() {
