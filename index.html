@@ -509,8 +509,8 @@
 
     <!-- Modal: Professeurs Absents en Temps Réel -->
     <div id="absent-profs-modal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 no-print">
-        <div class="bg-white rounded-t-3xl sm:rounded-2xl shadow-2xl max-w-3xl w-full overflow-hidden transform transition-all flex flex-col max-h-[85vh]">
-            <div class="bg-rose-700 px-5 py-4 text-white flex justify-between items-center">
+        <div class="bg-white rounded-t-3xl sm:rounded-2xl shadow-2xl max-w-3xl w-full overflow-hidden transform transition-all flex flex-col max-h-[88vh]">
+            <div class="bg-rose-700 px-5 py-4 text-white flex justify-between items-center flex-shrink-0">
                 <div class="flex items-center gap-2">
                     <i class="fa-solid fa-user-xmark text-lg"></i>
                     <div>
@@ -518,33 +518,39 @@
                         <p id="absent-modal-sub" class="text-xs text-rose-200">Suivi des absences importées</p>
                     </div>
                 </div>
-                <button onclick="closeAbsentProfsModal()" class="text-rose-200 hover:text-white p-1 rounded-lg">
+                <button onclick="closeAbsentProfsModal()" class="text-rose-200 hover:text-white p-1.5 rounded-lg">
                     <i class="fa-solid fa-xmark text-base"></i>
                 </button>
             </div>
 
-            <!-- Onglets de vue : Temps réel, Journée, Semaine -->
-            <div class="bg-slate-100 px-4 pt-3 border-b border-slate-200 flex items-center justify-between gap-2 overflow-x-auto no-scrollbar">
-                <div class="flex gap-1.5" id="absent-tabs-container">
-                    <button onclick="setAbsentTab('realtime')" id="absent-tab-realtime" class="px-3 py-2 rounded-t-xl text-xs font-bold transition bg-white text-rose-700 border-t-2 border-rose-600 shadow-xs whitespace-nowrap">
-                        <i class="fa-solid fa-bolt mr-1"></i> Temps réel (-1h)
+            <!-- Onglets de vue : Temps réel, Journée, Semaine (corrigés pour une lisibilité complète sur mobile et desktop) -->
+            <div class="bg-slate-100 px-3 sm:px-4 py-2.5 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2 flex-shrink-0">
+                <div class="grid grid-cols-3 sm:flex gap-1.5 w-full sm:w-auto" id="absent-tabs-container">
+                    <button onclick="setAbsentTab('realtime')" id="absent-tab-realtime" class="px-2.5 py-2 rounded-xl text-[11px] sm:text-xs font-bold transition bg-rose-600 text-white shadow-sm flex items-center justify-center gap-1.5 text-center leading-tight">
+                        <i class="fa-solid fa-bolt"></i>
+                        <span>Temps réel (-1h)</span>
                     </button>
-                    <button onclick="setAbsentTab('day')" id="absent-tab-day" class="px-3 py-2 rounded-t-xl text-xs font-semibold transition text-slate-600 hover:bg-slate-200 whitespace-nowrap">
-                        <i class="fa-solid fa-calendar-day mr-1"></i> Journée complète
+                    <button onclick="setAbsentTab('day')" id="absent-tab-day" class="px-2.5 py-2 rounded-xl text-[11px] sm:text-xs font-semibold transition bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 flex items-center justify-center gap-1.5 text-center leading-tight">
+                        <i class="fa-solid fa-calendar-day"></i>
+                        <span>Journée</span>
                     </button>
-                    <button onclick="setAbsentTab('week')" id="absent-tab-week" class="px-3 py-2 rounded-t-xl text-xs font-semibold transition text-slate-600 hover:bg-slate-200 whitespace-nowrap">
-                        <i class="fa-solid fa-calendar-week mr-1"></i> Semaine entière
+                    <button onclick="setAbsentTab('week')" id="absent-tab-week" class="px-2.5 py-2 rounded-xl text-[11px] sm:text-xs font-semibold transition bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 flex items-center justify-center gap-1.5 text-center leading-tight">
+                        <i class="fa-solid fa-calendar-week"></i>
+                        <span>Semaine</span>
                     </button>
                 </div>
 
-                <button onclick="clearAbsentProfsData()" class="text-[11px] font-bold text-rose-600 hover:text-rose-800 bg-white hover:bg-rose-50 px-2.5 py-1.5 rounded-lg border border-rose-200 transition mb-2 flex-shrink-0">
-                    <i class="fa-solid fa-trash-can mr-1"></i> Vider
-                </button>
+                <div class="flex justify-end">
+                    <button onclick="clearAbsentProfsData()" class="text-[11px] font-bold text-rose-700 hover:text-rose-800 bg-white hover:bg-rose-50 px-3 py-1.5 rounded-xl border border-rose-200 transition flex items-center gap-1.5 shadow-2xs">
+                        <i class="fa-solid fa-trash-can"></i>
+                        <span>Vider la liste</span>
+                    </button>
+                </div>
             </div>
 
-            <div class="p-4 sm:p-6 flex flex-col gap-4 overflow-y-auto custom-scrollbar flex-1 bg-slate-50">
+            <div class="p-4 sm:p-6 flex flex-col gap-4 overflow-y-auto custom-scrollbar flex-1 min-h-0 bg-slate-50">
                 <!-- Filtre jour (uniquement actif sur l'onglet Journée complète) -->
-                <div id="absent-day-filter-bar" class="hidden items-center gap-2 bg-white p-2.5 rounded-xl border border-slate-200 shadow-xs">
+                <div id="absent-day-filter-bar" class="hidden items-center justify-between sm:justify-start gap-2 bg-white p-2.5 rounded-xl border border-slate-200 shadow-xs flex-shrink-0">
                     <label class="text-xs font-bold text-slate-600 uppercase">Choisir le jour :</label>
                     <select id="absent-filter-day" onchange="renderAbsentProfsList()" class="text-xs bg-slate-100 border border-slate-300 rounded-lg px-2.5 py-1.5 font-bold text-slate-700 focus:outline-none">
                         <option value="Lundi">Lundi</option>
@@ -561,7 +567,7 @@
                 </div>
             </div>
 
-            <div class="bg-white px-5 py-3 border-t border-slate-100 flex justify-between items-center text-xs">
+            <div class="bg-white px-5 py-3 border-t border-slate-100 flex justify-between items-center text-xs flex-shrink-0 pb-safe">
                 <span id="absent-total-count" class="font-bold text-slate-600">Total : 0 absences</span>
                 <button onclick="closeAbsentProfsModal()" class="px-4 py-2 rounded-xl font-bold text-slate-700 bg-slate-200 hover:bg-slate-300 transition">
                     Fermer
@@ -1073,7 +1079,6 @@
                 .replace(/[\u0300-\u036f]/g, '')
                 .toLowerCase();
 
-            // Si la colonne indique explicitement qu'il n'y a pas de remplacement
             if (
                 lower.includes('non remplace') ||
                 lower.includes('pas de remplace') ||
@@ -1086,7 +1091,6 @@
                 return '';
             }
 
-            // Ex. : "Remplacé par M. Dupont" / "Remplacement : Mme Martin" / "Assuré par DURAND"
             const matchPar = val.match(/(?:remplac[ée]?(?:\s+en\s+cours)?\s+par|remplacement\s*:?|assur[ée]\s+par)\s+(.+)/i);
             if (matchPar && matchPar[1]) {
                 return matchPar[1].trim();
@@ -1124,7 +1128,6 @@
                         const rawDate = getExcelFieldValue(row, ['date']);
                         const debut = getExcelFieldValue(row, ['début', 'debut', 'heure']);
 
-                        // Colonne « a donné lieu à… » en priorité, avec repli sur remplacement/statut
                         const outcomeCol = getExcelFieldValue(row, [
                             'a donné lieu à…',
                             'a donné lieu à...',
@@ -1271,27 +1274,28 @@
             const btnWeek = document.getElementById('absent-tab-week');
             const filterBar = document.getElementById('absent-day-filter-bar');
 
+            const inactiveClass = "px-2.5 py-2 rounded-xl text-[11px] sm:text-xs font-semibold transition bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 flex items-center justify-center gap-1.5 text-center leading-tight";
+            const activeClass = "px-2.5 py-2 rounded-xl text-[11px] sm:text-xs font-bold transition bg-rose-600 text-white border border-rose-600 shadow-sm flex items-center justify-center gap-1.5 text-center leading-tight";
+
             [btnRealtime, btnDay, btnWeek].forEach(b => {
-                if(b) {
-                    b.className = "px-3 py-2 rounded-t-xl text-xs font-semibold transition text-slate-600 hover:bg-slate-200 whitespace-nowrap";
-                }
+                if (b) b.className = inactiveClass;
             });
 
             if (tab === 'realtime' && btnRealtime) {
-                btnRealtime.className = "px-3 py-2 rounded-t-xl text-xs font-bold transition bg-white text-rose-700 border-t-2 border-rose-600 shadow-xs whitespace-nowrap";
-                if(filterBar) {
+                btnRealtime.className = activeClass;
+                if (filterBar) {
                     filterBar.classList.add('hidden');
                     filterBar.classList.remove('flex');
                 }
             } else if (tab === 'day' && btnDay) {
-                btnDay.className = "px-3 py-2 rounded-t-xl text-xs font-bold transition bg-white text-rose-700 border-t-2 border-rose-600 shadow-xs whitespace-nowrap";
-                if(filterBar) {
+                btnDay.className = activeClass;
+                if (filterBar) {
                     filterBar.classList.remove('hidden');
                     filterBar.classList.add('flex');
                 }
             } else if (tab === 'week' && btnWeek) {
-                btnWeek.className = "px-3 py-2 rounded-t-xl text-xs font-bold transition bg-white text-rose-700 border-t-2 border-rose-600 shadow-xs whitespace-nowrap";
-                if(filterBar) {
+                btnWeek.className = activeClass;
+                if (filterBar) {
                     filterBar.classList.add('hidden');
                     filterBar.classList.remove('flex');
                 }
@@ -1343,11 +1347,11 @@
 
             if (totalCountEl) {
                 const tabTitles = { 
-                    realtime: `Temps réel (Jour : ${currentDayReal}, à partir de -1h)`, 
-                    day: `Journée complète (${filterDayVal})`, 
+                    realtime: `Temps réel (${currentDayReal}, à partir de -1h)`, 
+                    day: `Journée (${filterDayVal})`, 
                     week: 'Semaine entière' 
                 };
-                totalCountEl.textContent = `${filtered.length} absence(s) affichée(s) — Mode : ${tabTitles[currentAbsentTab]}`;
+                totalCountEl.textContent = `${filtered.length} absence(s) — ${tabTitles[currentAbsentTab]}`;
             }
 
             if (filtered.length === 0) {
